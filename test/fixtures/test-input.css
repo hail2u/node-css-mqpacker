@@ -1,0 +1,35 @@
+@media (min-width: 99px) {
+  .foo {
+    z-index: 1;
+  }
+}
+
+@media (min-width: 999px) {
+  .bar {
+    z-index: 3;
+  }
+}
+
+@media screen and (min-width: 999px) {
+  .baz {
+    z-index: 5;
+  }
+}
+
+@media (min-width: 999px) {
+  .corge {
+    z-index: 4;
+  }
+}
+
+@media (min-width: 99px) {
+  .quux {
+    z-index: 2;
+  }
+}
+
+@media screen and (min-width: 999px) {
+  .qux {
+    z-index: 6;
+  }
+}

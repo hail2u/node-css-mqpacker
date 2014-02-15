@@ -1,0 +1,26 @@
+@media (min-width: 99px) {
+  .foo {
+    z-index: 1;
+  }
+  .quux {
+    z-index: 2;
+  }
+}
+
+@media (min-width: 999px) {
+  .bar {
+    z-index: 3;
+  }
+  .corge {
+    z-index: 4;
+  }
+}
+
+@media screen and (min-width: 999px) {
+  .baz {
+    z-index: 5;
+  }
+  .qux {
+    z-index: 6;
+  }
+}

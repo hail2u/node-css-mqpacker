@@ -1,0 +1,33 @@
+{
+  "name": "css-mqpacker",
+  "version": "0.0.0",
+  "description": "Pack same CSS media query rules into one media query rule.",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodeunit test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hail2u/node-css-mqpacker"
+  },
+  "keywords": [
+    "css",
+    "postprocessor",
+    "mediaqueries"
+  ],
+  "author": "Kyo Nagashima <kyo@hail2u.net> (http://hail2u.net/)",
+  "license": {
+    "type": "MIT",
+    "url": "http://hail2u.mit-license.org/2013"
+  },
+  "bugs": {
+    "url": "https://github.com/hail2u/node-css-mqpacker/issues"
+  },
+  "homepage": "https://github.com/hail2u/node-css-mqpacker",
+  "dependencies": {
+    "postcss": "~0.3.0"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.8.4"
+  }
+}
