@@ -22,7 +22,7 @@ exports.testRealCSS = function (test) {
   });
   var output = fs.readFileSync(path.join(fixtures, 'test-output.css'), {
     encoding: 'utf8'
-  }).replace(/\n$/, '');
+  });
   test.strictEqual(mqpacker.pack(input).css, output);
   test.done();
 };
