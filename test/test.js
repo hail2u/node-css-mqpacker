@@ -2,27 +2,46 @@
 'use strict';
 
 var fs = require('fs');
-var mqpacker = require('../index');
 var path = require('path');
 var postcss = require('postcss');
 
+var mqpacker = require('../index');
+
 var fixtures = path.join(__dirname, 'fixtures');
+var input = '';
+var expected = '';
+var _loadInput = function (name) {
+  return fs.readFileSync(path.join(fixtures, name + '-input.css'), {
+    encoding: 'utf8'
+  });
+};
+var _loadExpected = function (name) {
+  return fs.readFileSync(path.join(fixtures, name + '-expected.css'), {
+    encoding: 'utf8'
+  });
+};
 
 exports.testPublicInterfaces = function (test) {
   test.expect(1);
-  var css = '.foo { color: black; }';
-  test.strictEqual(mqpacker.pack(css).css, postcss.parse(css).toString());
+
+  input = '.foo { color: black; }';
+  expected = postcss.parse(input);
+  test.strictEqual(mqpacker.pack(input).css, expected.toString());
+
   test.done();
 };
 
 exports.testRealCSS = function (test) {
-  test.expect(1);
-  var input = fs.readFileSync(path.join(fixtures, 'test-input.css'), {
-    encoding: 'utf8'
-  });
-  var output = fs.readFileSync(path.join(fixtures, 'test-output.css'), {
-    encoding: 'utf8'
-  });
-  test.strictEqual(mqpacker.pack(input).css, output);
+  test.expect(2);
+
+  var testCases = ['simple', 'multi'];
+
+  for (var i = 0, l = testCases.length; i < l; i++) {
+    var testCase = testCases[i];
+    input = _loadInput(testCase);
+    expected = _loadExpected(testCase);
+    test.strictEqual(mqpacker.pack(input).css, expected);
+  }
+
   test.done();
 };
