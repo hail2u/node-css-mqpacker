@@ -37,7 +37,7 @@ If `test.css` has:
     }
     
     @media (min-width: 769px) {
-      .foo {
+      .foo:before {
         content: "foo on medium";
       }
     }
@@ -47,7 +47,7 @@ If `test.css` has:
     }
     
     @media (min-width: 769px) {
-      .bar {
+      .bar:before {
         content: "bar on medium";
       }
     }
@@ -63,10 +63,10 @@ You will get following output:
     }
     
     @media (min-width: 769px) {
-      .foo {
+      .foo:before {
         content: "foo on medium";
       }
-      .bar {
+      .bar:before {
         content: "bar on medium";
       }
     }
