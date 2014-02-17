@@ -10,6 +10,7 @@ var mqpacker = require('../index');
 var fixtures = path.join(__dirname, 'fixtures');
 var input = '';
 var expected = '';
+var opts = {};
 var _loadInput = function (name) {
   return fs.readFileSync(path.join(fixtures, name + '-input.css'), {
     encoding: 'utf8'
@@ -22,11 +23,14 @@ var _loadExpected = function (name) {
 };
 
 exports.testPublicInterfaces = function (test) {
-  test.expect(1);
+  test.expect(2);
 
   input = '.foo { color: black; }';
   expected = postcss.parse(input);
   test.strictEqual(mqpacker.pack(input).css, expected.toString());
+
+  opts.map = true;
+  test.strictEqual(mqpacker.pack(input, opts).map, expected.toResult(opts).map);
 
   test.done();
 };
