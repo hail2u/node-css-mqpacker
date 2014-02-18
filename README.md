@@ -27,7 +27,10 @@ Read `test.css`, process content, and output processed CSS to STDOUT.
     var original = fs.readFileSync('test.css', {
       encoding: 'utf8'
     });
-    var processed = mqpacker.pack(original, { from: 'test.css', to 'test.css' });
+    var processed = mqpacker.pack(original, {
+      from: 'test.css',
+      to: 'test.css'
+    });
     console.log(processed.css);
 
 If `test.css` has:
