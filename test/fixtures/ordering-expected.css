@@ -1,0 +1,21 @@
+.foo:before {
+  content: "foo on small";
+}
+
+.bar:before {
+  content: "bar on small";
+}
+
+@media (min-width: 769px) {
+  .foo:before {
+    content: "foo on medium";
+  }
+  .bar:before {
+    content: "bar on medium";
+  }
+}
+
+.foo:before {
+  color: red; /* need to highlight warning */
+  content: "read this text"
+}
