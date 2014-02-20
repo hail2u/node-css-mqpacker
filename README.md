@@ -15,64 +15,71 @@ INSTALLATION
 QUICK USAGE
 -----------
 
-Read `test.css`, process content, and output processed CSS to STDOUT.
+Read `from.css`, process its content, and output processed CSS to STDOUT.
 
     #!/usr/bin/env node
     
-    'use strict'
+    'use strict';
     
     var fs = require('fs');
     var mqpacker = require('css-mqpacker');
     
-    var original = fs.readFileSync('test.css', {
+    var original = fs.readFileSync('from.css', {
       encoding: 'utf8'
     });
     var processed = mqpacker.pack(original, {
-      from: 'test.css',
-      to: 'test.css'
+      from: 'from.css',
+      to: 'to.css',
+      map: true
     });
     console.log(processed.css);
 
 If `test.css` has:
 
-    .foo:before {
+    @charset "UTF-8";
+    
+    .foo::before {
       content: "foo on small";
     }
     
-    @media (min-width: 769px) {
-      .foo:before {
+    @media screen and (min-width: 769px) {
+      .foo::before {
         content: "foo on medium";
       }
     }
     
-    .bar:before {
+    .bar::before {
       content: "bar on small";
     }
     
-    @media (min-width: 769px) {
-      .bar:before {
+    @media screen and (min-width: 769px) {
+      .bar::before {
         content: "bar on medium";
       }
     }
 
 You will get following output:
 
-    .foo:before {
+    @charset "UTF-8";
+    
+    .foo::before {
       content: "foo on small";
     }
     
-    .bar:before {
+    .bar::before {
       content: "bar on small";
     }
     
-    @media (min-width: 769px) {
-      .foo:before {
+    @media screen and (min-width: 769px) {
+      .foo::before {
         content: "foo on medium";
       }
-      .bar:before {
+      .bar::before {
         content: "bar on medium";
       }
     }
+    
+    /*# sourceMappingURL=to.css.map */
 
 Sweet!
 
