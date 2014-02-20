@@ -1,14 +1,14 @@
-.bar:before {
+.bar::before {
   content: "bar on small";
 }
 
 @media (min-width: 769px) {
-  .bar:before {
+  .bar::before {
     content: "bar on medium";
   }
 }
 
-.foo:before {
+.foo::before {
   color: red; /* need to highlight warning */
   content: "read this text"
 }
