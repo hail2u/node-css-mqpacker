@@ -30,7 +30,10 @@ exports.testPublicInterfaces = function (test) {
   test.strictEqual(mqpacker.pack(input).css, expected.toString());
 
   opts.map = true;
-  test.strictEqual(mqpacker.pack(input, opts).map, expected.toResult(opts).map);
+  test.strictEqual(
+    mqpacker.pack(input, opts).map,
+    expected.toResult(opts).map
+  );
 
   test.done();
 };
