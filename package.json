@@ -1,6 +1,6 @@
 {
   "name": "css-mqpacker",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Pack same CSS media query rules into one media query rule.",
   "main": "index.js",
   "scripts": {
