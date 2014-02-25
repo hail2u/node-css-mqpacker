@@ -7,17 +7,18 @@ var postcss = require('postcss');
 
 var mqpacker = require('../index');
 
-var fixtures = path.join(__dirname, 'fixtures');
+var dirFixtures = path.join(__dirname, 'fixtures');
+var dirExpected = path.join(__dirname, 'expected');
 var input = '';
 var expected = '';
 var opts = {};
-var _loadInput = function (name) {
-  return fs.readFileSync(path.join(fixtures, name + '-input.css'), {
+var loadInput = function (name) {
+  return fs.readFileSync(path.join(dirFixtures, name + '.css'), {
     encoding: 'utf8'
   });
 };
-var _loadExpected = function (name) {
-  return fs.readFileSync(path.join(fixtures, name + '-expected.css'), {
+var loadExpected = function (name) {
+  return fs.readFileSync(path.join(dirExpected, name + '.css'), {
     encoding: 'utf8'
   });
 };
@@ -35,7 +36,10 @@ exports.testPublicInterfaces = function (test) {
     expected.toResult(opts).map
   );
 
-  test.strictEqual(postcss().use(mqpacker.processor).process(input).css, expected.toString());
+  test.strictEqual(
+    postcss().use(mqpacker.processor).process(input).css,
+    expected.toString()
+  );
 
   test.done();
 };
@@ -47,8 +51,8 @@ exports.testRealCSS = function (test) {
 
   for (var i = 0, l = testCases.length; i < l; i++) {
     var testCase = testCases[i];
-    input = _loadInput(testCase);
-    expected = _loadExpected(testCase);
+    input = loadInput(testCase);
+    expected = loadExpected(testCase);
     test.strictEqual(mqpacker.pack(input).css, expected);
   }
 
