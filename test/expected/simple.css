@@ -4,6 +4,16 @@
   z-index: 1;
 }
 
+@font-face {
+  font-family: 'family';
+  src: 'family.eot';
+}
+
+@font-face {
+  font-family: 'family';
+  src: 'family.woff';
+}
+
 .bar {
   z-index: 2;
 }
