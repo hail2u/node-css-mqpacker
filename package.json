@@ -13,7 +13,10 @@
   "keywords": [
     "css",
     "postprocessor",
-    "mediaqueries"
+    "post-processor",
+    "media queries",
+    "media query",
+    "postcss"
   ],
   "author": "Kyo Nagashima <kyo@hail2u.net> (http://hail2u.net/)",
   "license": {
