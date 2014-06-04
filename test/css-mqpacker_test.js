@@ -45,9 +45,13 @@ exports.testPublicInterfaces = function (test) {
 };
 
 exports.testRealCSS = function (test) {
-  test.expect(2);
+  test.expect(3);
 
-  var testCases = ['simple', 'multi'];
+  var testCases = [
+    'simple',
+    'multi',
+    'query-order'
+  ];
 
   for (var i = 0, l = testCases.length; i < l; i++) {
     var testCase = testCases[i];
