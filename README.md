@@ -17,8 +17,8 @@ Or install as [Grunt plugin][2].
 QUICK USAGE
 -----------
 
-Read `from.css`, process its content, and output processed CSS to
-STDOUT.
+Read `from.css`, process its content, and output processed CSS to STDOUT.
+
 ```js
 #!/usr/bin/env node
 
@@ -27,9 +27,7 @@ STDOUT.
 var fs = require('fs');
 var mqpacker = require('css-mqpacker');
 
-var original = fs.readFileSync('from.css', {
-  encoding: 'utf8'
-});
+var original = fs.readFileSync('from.css', 'utf8');
 var processed = mqpacker.pack(original, {
   from: 'from.css',
   to: 'to.css',
@@ -37,7 +35,9 @@ var processed = mqpacker.pack(original, {
 });
 console.log(processed.css);
 ```
+
 If `test.css` has:
+
 ```css
 @charset "UTF-8";
 
@@ -61,7 +61,9 @@ If `test.css` has:
   }
 }
 ```
+
 You will get following output:
+
 ```css
 @charset "UTF-8";
 
@@ -84,40 +86,25 @@ You will get following output:
 
 /*# sourceMappingURL=to.css.map */
 ```
+
 Sweet!
 
 
 API
 ---
 
-### processor
+### pack(css, [options])
 
-This property returns core function of CSS MQPacker.
+Packs media queries in `css`.
 
-You can use this property for combining with other PostCSS processors
-such as [Autoprefixer][3].
-```js
-var autoprefixer = require('autoprefixer');
-var mqpacker = require('mqpacker');
-var postcss = require('postcss');
+The second argument is optional. The `options` is same as the second argument of
+PostCSS's `process()` method. This is useful for generating Source Map.
 
-postcss().use(
-  autoprefixer.postcss
-).use(
-  mqpakcer.processor
-).process(css);
-```
-
-### pack(css, options)
-
-This method packs media queries in a CSS.
-
-An argument `css` is a `String` that contains CSS, and `options` is a
-`Object` for outputting Source Map file.
-```js
+```javascript
 var fs = require('fs');
 var mqpacker = require('mqpacker');
 
+var css = fs.readFileSync('from.css', 'utf8');
 var result = mqpakcer.pack(css, {
   from: 'from.css',
   to: 'to.css',
@@ -126,7 +113,29 @@ var result = mqpakcer.pack(css, {
 fs.writeFileSync('to.css', result.css);
 fs.writeFileSync('to.css.map', result.map);
 ```
-See also [PostCSS document][4] for more about `options`.
+
+See also [PostCSS document][3] for more about `options`.
+
+
+### processor
+
+Returns [PostCSS processor][4].
+
+You can use this property for combining with other PostCSS processors such as
+[Autoprefixer][5].
+
+```javascript
+var autoprefixer = require('autoprefixer');
+var mqpacker = require('mqpacker');
+var postcss = require('postcss');
+
+var css = fs.readFileSync('test.css', 'utf8');
+postcss().use(
+  autoprefixer.postcss
+).use(
+  mqpakcer.processor
+).process(css);
+```
 
 
 LICENSE
@@ -137,5 +146,6 @@ MIT: http://hail2u.mit-license.org/2014
 
 [1]: https://github.com/ai/postcss
 [2]: https://github.com/hail2u/grunt-css-mqpacker
-[3]: https://github.com/ai/autoprefixer
-[4]: https://github.com/ai/postcss#source-map-1
+[3]: https://github.com/ai/postcss#source-map-1
+[4]: https://github.com/ai/postcss#processor
+[5]: https://github.com/ai/autoprefixer
