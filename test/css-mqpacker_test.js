@@ -31,7 +31,7 @@ exports.testPublicInterfaces = function (test) {
   test.strictEqual(mqpacker.pack(input).css, expected.toString());
 
   opts.map = true;
-  test.strictEqual(
+  test.deepEqual(
     mqpacker.pack(input, opts).map,
     expected.toResult(opts).map
   );
