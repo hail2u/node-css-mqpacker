@@ -4,7 +4,6 @@
   .foo {
     z-index: 1;
   }
-
   .bar {
     z-index: 2;
   }
@@ -14,7 +13,6 @@
   .baz {
     z-index: 3;
   }
-
   .qux {
     z-index: 4;
   }
@@ -24,7 +22,6 @@
   .quux {
     z-index: 5;
   }
-
   .corge {
     z-index: 6;
   }
