@@ -45,12 +45,13 @@ exports.testPublicInterfaces = function (test) {
 };
 
 exports.testRealCSS = function (test) {
-  test.expect(3);
+  test.expect(4);
 
   var testCases = [
     'simple',
     'multi',
-    'query-order'
+    'query-order',
+    'between-the-packed-rules'
   ];
 
   for (var i = 0, l = testCases.length; i < l; i++) {

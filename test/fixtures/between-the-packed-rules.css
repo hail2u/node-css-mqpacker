@@ -1,0 +1,17 @@
+@media (min-width: 999px) {
+  .foo {
+    z-index: 1;
+  }
+}
+
+@media (min-width: 999px) {
+  .bar {
+    z-index: 2;
+  }
+}
+
+@media (min-width: 999px) {
+  .baz {
+    z-index: 3;
+  }
+}
