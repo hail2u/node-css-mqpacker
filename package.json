@@ -16,6 +16,9 @@
     "mediaquery",
     "media",
     "query",
+    "sourcemap",
+    "source",
+    "map",
     "postcss"
   ],
   "author": "Kyo Nagashima <kyo@hail2u.net> (http://hail2u.net/)",
