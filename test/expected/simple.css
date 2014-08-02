@@ -26,9 +26,11 @@
   .foo {
     z-index: 4;
   }
+
   .bar {
     z-index: 5;
   }
+
   .baz {
     z-index: 6;
   }
