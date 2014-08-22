@@ -138,6 +138,55 @@ postcss().use(
 ```
 
 
+KNOWN ISSUE
+-----------
+
+CSS MQPacker changes order of rulesets. This may breaks CSS applying order.
+
+```css
+@media (min-width: 320px) {
+  .foo {
+    width: 100px;
+  }
+}
+
+@media (min-width: 640px) {
+  .bar {
+    width: 200px;
+  }
+}
+
+@media (min-width: 320px) {
+  .baz {
+    width: 300px;
+  }
+}
+```
+
+Becomes:
+
+```css
+@media (min-width: 320px) {
+  .foo {
+    width: 100px;
+  }
+
+  .baz {
+    width: 300px;
+  }
+}
+
+@media (min-width: 640px) {
+  .bar {
+    width: 200px;
+  }
+}
+```
+
+Fine. But If a HTML element has `class="bar baz"` and viewport width larget than
+`640px`, that element `width` incorrectly set to `200px` instead of `300px`.
+
+
 LICENSE
 -------
 
