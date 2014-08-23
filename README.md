@@ -117,7 +117,7 @@ fs.writeFileSync('to.css.map', result.map);
 See also [PostCSS document][3] for more about `options`.
 
 
-### processor
+### postcss
 
 Returns [PostCSS processor][4].
 
@@ -133,7 +133,7 @@ var css = fs.readFileSync('test.css', 'utf8');
 postcss().use(
   autoprefixer.postcss
 ).use(
-  mqpakcer.processor
+  mqpakcer.postcss
 ).process(css);
 ```
 

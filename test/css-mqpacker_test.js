@@ -24,7 +24,7 @@ var loadExpected = function (name) {
 };
 
 exports.testPublicInterfaces = function (test) {
-  test.expect(3);
+  test.expect(4);
 
   input = '.foo { color: black; }';
   expected = postcss.parse(input);
@@ -36,6 +36,12 @@ exports.testPublicInterfaces = function (test) {
     expected.toResult(opts).map
   );
 
+  test.strictEqual(
+    postcss().use(mqpacker.postcss).process(input).css,
+    expected.toString()
+  );
+
+  // Old interface
   test.strictEqual(
     postcss().use(mqpacker.processor).process(input).css,
     expected.toString()
