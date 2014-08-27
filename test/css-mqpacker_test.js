@@ -7,7 +7,7 @@ var postcss = require('postcss');
 var mqpacker = require('../index');
 
 exports.API = function (test) {
-  test.expect(4);
+  test.expect(3);
 
   var input = '.foo{color:black}';
   var expected = postcss().process(input).css;
@@ -19,11 +19,6 @@ exports.API = function (test) {
 
   test.strictEqual(
     postcss().use(mqpacker.postcss).process(input).css,
-    expected
-  );
-
-  test.strictEqual(
-    postcss().use(require('../index').postcss).process(input).css,
     expected
   );
 
