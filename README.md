@@ -170,7 +170,6 @@ Becomes:
   .foo {
     width: 100px;
   }
-
   .baz {
     width: 300px;
   }

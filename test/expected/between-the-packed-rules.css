@@ -1,12 +1,11 @@
+
 @media (min-width: 999px) {
   .foo {
     z-index: 1;
   }
-
   .bar {
     z-index: 2;
   }
-
   .baz {
     z-index: 3;
   }
