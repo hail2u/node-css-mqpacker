@@ -1,5 +1,3 @@
-@charset "UTF-8";
-
 @media (min-width: 99px) {
   .foo {
     z-index: 1;

@@ -1,24 +1,34 @@
-@charset "UTF-8";
 @media (min-width: 99px) {
   .foo {
     z-index: 1;
   }
-  .bar {
-    z-index: 2;
-  }
 }
+
 @media (min-width: 999px) {
   .baz {
     z-index: 3;
   }
-  .qux {
-    z-index: 4;
+}
+
+@media (min-width: 99px) {
+  .bar {
+    z-index: 2;
   }
 }
+
 @media screen and (min-width: 999px) {
   .quux {
     z-index: 5;
   }
+}
+
+@media (min-width: 999px) {
+  .qux {
+    z-index: 4;
+  }
+}
+
+@media screen and (min-width: 999px) {
   .corge {
     z-index: 6;
   }
