@@ -9,7 +9,7 @@ var mqpacker = require('../index');
 exports.API = function (test) {
   test.expect(3);
 
-  var input = '.foo{color:black}';
+  var input = '@media (min-width:1px) {.foo{color:black}}';
   var expected = postcss().process(input).css;
 
   test.strictEqual(
@@ -39,7 +39,7 @@ exports['Option: PostCSS options'] = function (test) {
     from: 'from.css',
     to: 'to.css'
   };
-  var input = '.foo{color:black}';
+  var input = '@media (min-width:1px) {.foo{color:black}}\n/*# sourceMappingURL=to.css.map */';
   var processed = mqpacker.pack(input, opts);
   var expected = postcss().process(input, opts);
 
