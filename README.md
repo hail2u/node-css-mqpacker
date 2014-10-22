@@ -102,10 +102,10 @@ PostCSS's `process()` method. This is useful for generating Source Map.
 
 ```javascript
 var fs = require('fs');
-var mqpacker = require('mqpacker');
+var mqpacker = require('css-mqpacker');
 
 var css = fs.readFileSync('from.css', 'utf8');
-var result = mqpakcer.pack(css, {
+var result = mqpacker.pack(css, {
   from: 'from.css',
   to: 'to.css',
   map: true
@@ -126,14 +126,14 @@ You can use this property for combining with other PostCSS processors such as
 
 ```javascript
 var autoprefixer = require('autoprefixer');
-var mqpacker = require('mqpacker');
+var mqpacker = require('css-mqpacker');
 var postcss = require('postcss');
 
 var css = fs.readFileSync('test.css', 'utf8');
 postcss().use(
   autoprefixer.postcss
 ).use(
-  mqpakcer.postcss
+  mqpacker.postcss
 ).process(css);
 ```
 
