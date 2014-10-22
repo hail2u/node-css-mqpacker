@@ -105,7 +105,7 @@ var fs = require('fs');
 var mqpacker = require('css-mqpacker');
 
 var css = fs.readFileSync('from.css', 'utf8');
-var result = mqpakcer.pack(css, {
+var result = mqpacker.pack(css, {
   from: 'from.css',
   to: 'to.css',
   map: true
@@ -133,7 +133,7 @@ var css = fs.readFileSync('test.css', 'utf8');
 postcss().use(
   autoprefixer.postcss
 ).use(
-  mqpakcer.postcss
+  mqpacker.postcss
 ).process(css);
 ```
 
