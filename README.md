@@ -141,6 +141,78 @@ postcss().use(
 KNOWN ISSUE
 -----------
 
+### The "First Win" Algorithm
+
+CSS MQPacker is implemented with the "first win" algorithm. This means:
+
+```css
+.foo {
+  width: 10px;
+}
+
+@media (min-width: 640px) {
+  .foo {
+    width: 150px;
+  }
+}
+
+.bar {
+  width: 20px;
+}
+
+@media (min-width: 320px) {
+  .bar {
+    width: 200px;
+  }
+}
+
+@media (min-width: 640px) {
+  .bar {
+    width: 300px;
+  }
+}
+```
+
+Becomes:
+
+```css
+.foo {
+  width: 10px;
+}
+
+.bar {
+  width: 20px;
+}
+
+@media (min-width: 640px) {
+  .foo {
+    width: 150px;
+  }
+  .bar {
+    width: 300px;
+  }
+}
+
+@media (min-width: 320px) {
+  .bar {
+    width: 200px;
+  }
+}
+```
+
+This breaks cascading order of `.bar`, and displayed in `200px` instead of
+`300px` if a viewport wider than `640px`.
+
+I suggest defining queries order at first:
+
+```css
+@media (min-width: 320px) { /*! Wider than 320px */ }
+@media (min-width: 640px) { /*! Wider than 640px */ }
+```
+
+
+### Multiple Classes
+
 CSS MQPacker changes order of rulesets. This may breaks CSS applying order.
 
 ```css
