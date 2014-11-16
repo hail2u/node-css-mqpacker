@@ -35,11 +35,12 @@ exports['Option: PostCSS options'] = function (test) {
   test.expect(2);
 
   var opts = {
-    map: true,
-    from: 'from.css',
-    to: 'to.css'
+    map: {
+      inline: false
+    },
+    from: 'from.css'
   };
-  var input = '@media (min-width:1px) {.foo{color:black}}\n/*# sourceMappingURL=to.css.map */';
+  var input = '@media (min-width:1px) {.foo{color:black}}';
   var processed = mqpacker.pack(input, opts);
   var expected = postcss().process(input, opts);
 
