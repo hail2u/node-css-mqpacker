@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "dependencies": {
-    "postcss": "^2.0.0"
+    "postcss": "^3.0.0"
   },
   "devDependencies": {
     "nodeunit": "^0.9.0"
