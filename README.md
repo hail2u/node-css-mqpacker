@@ -30,8 +30,10 @@ var mqpacker = require('css-mqpacker');
 var original = fs.readFileSync('from.css', 'utf8');
 var processed = mqpacker.pack(original, {
   from: 'from.css',
-  to: 'to.css',
-  map: true
+  map: {
+    inline: false
+  },
+  to: 'to.css'
 });
 console.log(processed.css);
 ```
@@ -107,8 +109,10 @@ var mqpacker = require('css-mqpacker');
 var css = fs.readFileSync('from.css', 'utf8');
 var result = mqpacker.pack(css, {
   from: 'from.css',
-  to: 'to.css',
-  map: true
+  map: {
+    inline: false
+  },
+  to: 'to.css'
 });
 fs.writeFileSync('to.css', result.css);
 fs.writeFileSync('to.css.map', result.map);
