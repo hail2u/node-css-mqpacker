@@ -266,6 +266,6 @@ MIT: http://hail2u.mit-license.org/2014
 
 [1]: https://github.com/ai/postcss
 [2]: https://github.com/hail2u/grunt-css-mqpacker
-[3]: https://github.com/ai/postcss#source-map-1
-[4]: https://github.com/ai/postcss#processor
-[5]: https://github.com/ai/autoprefixer
+[3]: https://github.com/postcss/postcss#source-map-1
+[4]: https://github.com/postcss/postcss#processor
+[5]: https://github.com/postcss/autoprefixer-core
