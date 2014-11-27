@@ -34,13 +34,13 @@ exports.API = function (test) {
 exports['Option: PostCSS options'] = function (test) {
   test.expect(2);
 
+  var input = '@media (min-width:1px) {.foo{color:black}}';
   var opts = {
+    from: 'from.css',
     map: {
       inline: false
-    },
-    from: 'from.css'
+    }
   };
-  var input = '@media (min-width:1px) {.foo{color:black}}';
   var processed = mqpacker.pack(input, opts);
   var expected = postcss().process(input, opts);
 
