@@ -6,7 +6,7 @@ var postcss = require('postcss');
 
 var mqpacker = require('../index');
 
-exports.API = function (test) {
+exports['Public API'] = function (test) {
   test.expect(3);
 
   var input = '@media (min-width:1px) {.foo{color:black}}';
