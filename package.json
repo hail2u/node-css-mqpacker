@@ -2,14 +2,17 @@
   "name": "css-mqpacker",
   "description": "Pack same CSS media query rules into one media query rule.",
   "version": "2.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "nodeunit test"
+  "author": "Kyo Nagashima <kyo@hail2u.net> (http://hail2u.net/)",
+  "bugs": {
+    "url": "https://github.com/hail2u/node-css-mqpacker/issues"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hail2u/node-css-mqpacker.git"
+  "dependencies": {
+    "postcss": "^3.0.0"
   },
+  "devDependencies": {
+    "nodeunit": "^0.9.0"
+  },
+  "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "keywords": [
     "css",
     "optimization",
@@ -21,16 +24,13 @@
     "map",
     "postcss"
   ],
-  "author": "Kyo Nagashima <kyo@hail2u.net> (http://hail2u.net/)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hail2u/node-css-mqpacker/issues"
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hail2u/node-css-mqpacker.git"
   },
-  "homepage": "https://github.com/hail2u/node-css-mqpacker",
-  "dependencies": {
-    "postcss": "^3.0.0"
-  },
-  "devDependencies": {
-    "nodeunit": "^0.9.0"
+  "scripts": {
+    "test": "nodeunit test"
   }
 }
