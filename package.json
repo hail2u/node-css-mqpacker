@@ -24,7 +24,10 @@
     "map",
     "postcss"
   ],
-  "license": "MIT",
+  "license": {
+    "type": "MIT",
+    "url": "http://hail2u.mit-license.org/2014"
+  },
   "main": "index.js",
   "repository": {
     "type": "git",
