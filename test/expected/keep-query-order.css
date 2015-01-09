@@ -1,4 +1,3 @@
-
 @media (min-width: 99px) {
   .foo {
     z-index: 1;
@@ -6,8 +5,7 @@
   .bar {
     z-index: 2;
   }
-}
-@media (min-width: 999px) {
+}@media (min-width: 999px) {
   .foo {
     z-index: 3;
   }
