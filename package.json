@@ -2,7 +2,7 @@
   "name": "css-mqpacker",
   "description": "Pack same CSS media query rules into one media query rule.",
   "version": "2.0.0",
-  "author": "Kyo Nagashima <kyo@hail2u.net> (http://hail2u.net/)",
+  "author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
   "bugs": {
     "url": "https://github.com/hail2u/node-css-mqpacker/issues"
   },
