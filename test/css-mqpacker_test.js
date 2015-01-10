@@ -7,7 +7,7 @@ var postcss = require('postcss');
 var mqpacker = require('../index');
 
 exports['Public API'] = function (test) {
-  test.expect(3);
+  test.expect(2);
 
   var input = '@media (min-width:1px) {.foo{color:black}}';
   var expected = postcss().process(input).css;
@@ -19,12 +19,6 @@ exports['Public API'] = function (test) {
 
   test.strictEqual(
     postcss().use(mqpacker.postcss).process(input).css,
-    expected
-  );
-
-  // Old interface
-  test.strictEqual(
-    postcss().use(mqpacker.processor).process(input).css,
     expected
   );
 
