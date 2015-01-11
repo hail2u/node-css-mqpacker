@@ -7,10 +7,12 @@
   src: local("F");
 }
 
-@media (min-width: 99px) {
-  .foo {
+@media (min-width: 99px){
+
+  .foo{
     z-index: 1;
   }
+
   .bar{
     z-index: 2;
   }

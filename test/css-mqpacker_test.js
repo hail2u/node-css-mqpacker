@@ -9,7 +9,7 @@ var mqpacker = require('../index');
 exports['Public API'] = function (test) {
   test.expect(2);
 
-  var input = '@media (min-width:1px) {.foo{color:black}}';
+  var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}';
   var expected = postcss().process(input).css;
 
   test.strictEqual(
@@ -28,7 +28,7 @@ exports['Public API'] = function (test) {
 exports['Option: PostCSS options'] = function (test) {
   test.expect(2);
 
-  var input = '@media (min-width:1px) {.foo{color:black}}';
+  var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}';
   var opts = {
     from: 'from.css',
     map: {
