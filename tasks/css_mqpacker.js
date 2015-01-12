@@ -5,6 +5,7 @@ module.exports = function (grunt) {
   pkg.name = pkg.name.replace(/-/g, '_');
 
   grunt.registerMultiTask(pkg.name, pkg.description, function () {
+    var fs = require('fs-extra');
     var mqpacker = require('../index');
 
     var options = this.options({});
@@ -17,7 +18,7 @@ module.exports = function (grunt) {
       var src = file.src[0];
       var dest = file.dest;
 
-      if (!grunt.file.exists(src)) {
+      if (!fs.existsSync(src)) {
         grunt.log.warn('Source file "' + src + '" not found.');
 
         return;
@@ -28,13 +29,13 @@ module.exports = function (grunt) {
         options.to = dest;
       }
 
-      var processed = mqpacker.pack(grunt.file.read(src), options);
-      grunt.file.write(dest, processed.css);
+      var processed = mqpacker.pack(fs.readFileSync(src, 'utf8'), options);
+      fs.outputFileSync(dest, processed.css);
       grunt.log.writeln('File "' + dest + '" created.');
 
       if (processed.map) {
         var map = dest + '.map';
-        grunt.file.write(map, processed.map);
+        fs.outputFileSync(map, processed.map);
         grunt.log.writeln('File "' + map + '" created.');
       }
     });
