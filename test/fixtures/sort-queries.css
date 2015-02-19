@@ -1,0 +1,118 @@
+@media print, only screen and (min-width: 28em) {
+    .test {
+        color: red;
+    }
+}
+@media print, only screen and (min-width: 46em) {
+    .test {
+        color: red;
+    }
+}
+@media print, only screen and (min-width: 61em) {
+    .test {
+        color: red;
+    }
+}
+@media print, only screen and (max-width: 61em) {
+    .test {
+        color: red;
+    }
+}
+@media only screen and (max-width: 45em) {
+    .test {
+        color: red;
+    }
+}
+@media only screen and (min-width: 28em) {
+    .test {
+        color: red;
+    }
+}
+@media only screen and (min-width: 46em) {
+    .test {
+        color: red;
+    }
+}
+@media only screen and (min-width: 61em) {
+    .test {
+        color: red;
+    }
+}
+@media only screen and (max-width: 61em) {
+    .test {
+        color: red;
+    }
+}
+@media print {
+    .test {
+        color: red;
+    }
+}
+@media screen {
+    .test {
+        color: red;
+    }
+}
+@media all {
+    .test {
+        color: red;
+    }
+}
+@media print, only screen and (min-width: 46em) and (max-width: 61em) {
+    .test {
+        color: red;
+    }
+}
+@media only screen and (min-width: 46em) and (max-width: 61em) {
+    .test {
+        color: red;
+    }
+}
+@media only screen {
+    .test {
+        color: red;
+    }
+}
+@media only print {
+    .test {
+        color: red;
+    }
+}
+@media print {
+    .test {
+        color: red;
+    }
+}
+@media print {
+    .test {
+        color: red;
+    }
+}
+@media print {
+    .test {
+        color: red;
+    }
+}
+.test {
+    color: red;
+}
+@media (max-width: 45em) {
+    .test {
+        color: red;
+    }
+}
+@media (min-width: 28em) {
+    .test {
+        color: red;
+    }
+}
+@media (min-width: 46em) {
+    .test {
+        color: red;
+    }
+}
+@media (min-width: 61em) {
+    .test {
+        color: red;
+    }
+}
