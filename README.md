@@ -90,6 +90,39 @@ You will get following output:
 Sweet!
 
 
+OPTIONS
+-------
+
+### sort
+
+By default, CSS MQPacker pack and order media queries as they are defined. See
+also [The "First Win" Algorithm][2]. If you want sort queries automatically,
+pass `sort: true` to this module.
+
+```javascript
+mqpacker({
+  sort: true
+}).pack(css);
+```
+
+Currently, this option only supports `min-width` queries. If you want to do
+more, you need to create your own sorting function and pass it to this option
+like this:
+
+```javascript
+mqpacker({
+  sort: function (a, b) {
+    return a.localeCompare(b);
+  }
+}).pack(css);
+```
+
+In this example, all your queries will sort by A-Z order.
+
+This sorting function directly pass to `Array#sort()` method of an array of all
+your queries.
+
+
 API
 ---
 
@@ -174,7 +207,8 @@ To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
       }
     });
 
-The `options` is completely same as [this package options][6].
+You can specify both [options of this package][7] and [PostCSS options][3] with
+`options` field of this task.
 
 
 KNOWN ISSUE
@@ -305,8 +339,9 @@ MIT: http://hail2u.mit-license.org/2014
 
 
 [1]: https://github.com/postcss/postcss
-[2]: https://github.com/postcss/postcss#source-map-1
-[3]: https://github.com/postcss/postcss#processor
-[4]: https://github.com/postcss/autoprefixer-core
-[5]: https://github.com/nDmitry/grunt-postcss
-[6]: #packcss-options
+[2]: #the-first-win-algorithm
+[3]: https://github.com/postcss/postcss#source-map-1
+[4]: https://github.com/postcss/postcss#processor
+[5]: https://github.com/postcss/autoprefixer-core
+[6]: https://github.com/nDmitry/grunt-postcss
+[7]: #options

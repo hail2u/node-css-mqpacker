@@ -1,0 +1,15 @@
+@media (min-width: 3em) and (min-width: 4em) {
+    .foo {
+        z-index: 1
+    }
+}
+@media (min-width: 2em) and (min-width: 5em) {
+    .foo {
+        z-index: 2
+    }
+}
+@media (min-width: 1em) and (min-width: 6em) {
+    .foo {
+        z-index: 3
+    }
+}
