@@ -7,10 +7,11 @@ var postcss = require('postcss');
 var mqpacker = require('../index');
 
 exports['Public API'] = function (test) {
-  test.expect(2);
-
+  var expected;
   var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}';
-  var expected = postcss().process(input).css;
+  expected = postcss().process(input).css;
+
+  test.expect(2);
 
   test.strictEqual(
     mqpacker.pack(input).css,
@@ -26,8 +27,7 @@ exports['Public API'] = function (test) {
 };
 
 exports['Option: PostCSS options'] = function (test) {
-  test.expect(2);
-
+  var expected;
   var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}';
   var opts = {
     from: 'from.css',
@@ -36,7 +36,9 @@ exports['Option: PostCSS options'] = function (test) {
     }
   };
   var processed = mqpacker.pack(input, opts);
-  var expected = postcss().process(input, opts);
+  expected = postcss().process(input, opts);
+
+  test.expect(2);
 
   test.strictEqual(
     processed.css,
@@ -53,13 +55,15 @@ exports['Option: PostCSS options'] = function (test) {
 
 exports['Real CSS'] = function (test) {
   var testCases = fs.readdirSync(path.join(__dirname, 'fixtures'));
-  var loadInput = function (file) {
-    file = path.join(__dirname, 'fixtures', file);
+
+  var loadExpected = function (file) {
+    file = path.join(__dirname, 'expected', file);
 
     return fs.readFileSync(file, 'utf8');
   };
-  var loadExpected = function (file) {
-    file = path.join(__dirname, 'expected', file);
+
+  var loadInput = function (file) {
+    file = path.join(__dirname, 'fixtures', file);
 
     return fs.readFileSync(file, 'utf8');
   };
