@@ -142,6 +142,43 @@ postcss().use(
 ```
 
 
+GRUNT PLUGIN USAGE
+------------------
+
+This package also installs a Grunt plugin. You can enable this plugin in
+`Gruntfile.js` of your project like that:
+
+    grunt.loadNpmTasks('css-mqpacker');
+
+This was not tested. I suggest using [`grunt-postcss`][6].
+
+
+### Example Config
+
+To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
+
+    grunt.initConfig({
+      'css_mqpacker': {
+        options: {
+          map: {
+            inline: false,
+            sourcesContent: false
+          }
+        },
+    
+        main: {
+          cwd: 'src/css/',
+          dest: 'build/css/',
+          expand: true,
+          ext: '.min.css',
+          src: ['**/*.css']
+        }
+      }
+    });
+
+The `options` is completely same as [this package options][3].
+
+
 KNOWN ISSUE
 -----------
 
@@ -273,3 +310,4 @@ MIT: http://hail2u.mit-license.org/2014
 [3]: https://github.com/postcss/postcss#source-map-1
 [4]: https://github.com/postcss/postcss#processor
 [5]: https://github.com/postcss/autoprefixer-core
+[6]: https://github.com/nDmitry/grunt-postcss
