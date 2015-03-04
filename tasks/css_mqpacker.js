@@ -11,12 +11,17 @@ module.exports = function (grunt) {
     var options = this.options({});
 
     this.files.forEach(function (file) {
+      var dest;
+      var map;
+      var processed;
+      var src;
+
       if (file.src.length !== 1) {
         grunt.fail.warn('This Grunt plugin does not support multiple source files.');
       }
 
-      var src = file.src[0];
-      var dest = file.dest;
+      src = file.src[0];
+      dest = file.dest;
 
       if (!fs.existsSync(src)) {
         grunt.log.warn('Source file "' + src + '" not found.');
@@ -29,12 +34,12 @@ module.exports = function (grunt) {
         options.to = dest;
       }
 
-      var processed = mqpacker.pack(fs.readFileSync(src, 'utf8'), options);
+      processed = mqpacker.pack(fs.readFileSync(src, 'utf8'), options);
       fs.outputFileSync(dest, processed.css);
       grunt.log.writeln('File "' + dest + '" created.');
 
       if (processed.map) {
-        var map = dest + '.map';
+        map = dest + '.map';
         fs.outputFileSync(map, processed.map);
         grunt.log.writeln('File "' + map + '" created.');
       }
