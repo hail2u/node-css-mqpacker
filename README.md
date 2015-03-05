@@ -241,10 +241,10 @@ Becomes:
 }
 ```
 
-This breaks cascading order of `.bar`, and displayed in `200px` instead of
-`300px` if a viewport wider than `640px`.
+This breaks cascading order of `.bar`, and `.bar` will be displayed in `200px`
+instead of `300px` even if a viewport wider than `640px`.
 
-I suggest defining queries order at first:
+I suggest defining a query order at first:
 
 ```css
 @media (min-width: 320px) { /*! Wider than 320px */ }
@@ -295,8 +295,9 @@ Becomes:
 }
 ```
 
-Fine. But If a HTML element has `class="bar baz"` and viewport width larget than
+Fine. But If a HTML element has `class="bar baz"` and viewport width larger than
 `640px`, that element `width` incorrectly set to `200px` instead of `300px`.
+This cannot be resolved only with CSS. So, be careful!
 
 
 LICENSE
