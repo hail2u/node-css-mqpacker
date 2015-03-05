@@ -11,8 +11,6 @@ INSTALLATION
 
     $ npm install css-mqpacker
 
-Or install as [Grunt plugin][2].
-
 
 QUICK USAGE
 -----------
@@ -118,15 +116,15 @@ fs.writeFileSync('to.css', result.css);
 fs.writeFileSync('to.css.map', result.map);
 ```
 
-See also [PostCSS document][3] for more about `options`.
+See also [PostCSS document][2] for more about this `options`.
 
 
 ### postcss
 
-Returns [PostCSS processor][4].
+Returns [PostCSS processor][3].
 
 You can use this property for combining with other PostCSS processors such as
-[Autoprefixer][5].
+[Autoprefixer][4].
 
 ```javascript
 var autoprefixer = require('autoprefixer');
@@ -150,7 +148,7 @@ This package also installs a Grunt plugin. You can enable this plugin in
 
     grunt.loadNpmTasks('css-mqpacker');
 
-This was not tested. I suggest using [`grunt-postcss`][6].
+This was not tested. I suggest using [`grunt-postcss`][5].
 
 
 ### Example Config
@@ -176,7 +174,7 @@ To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
       }
     });
 
-The `options` is completely same as [this package options][3].
+The `options` is completely same as [this package options][6].
 
 
 KNOWN ISSUE
@@ -306,9 +304,9 @@ LICENSE
 MIT: http://hail2u.mit-license.org/2014
 
 
-[1]: https://github.com/ai/postcss
-[2]: https://github.com/hail2u/grunt-css-mqpacker
-[3]: https://github.com/postcss/postcss#source-map-1
-[4]: https://github.com/postcss/postcss#processor
-[5]: https://github.com/postcss/autoprefixer-core
-[6]: https://github.com/nDmitry/grunt-postcss
+[1]: https://github.com/postcss/postcss
+[2]: https://github.com/postcss/postcss#source-map-1
+[3]: https://github.com/postcss/postcss#processor
+[4]: https://github.com/postcss/autoprefixer-core
+[5]: https://github.com/nDmitry/grunt-postcss
+[6]: #packcss-options
