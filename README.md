@@ -96,7 +96,7 @@ OPTIONS
 ### sort
 
 By default, CSS MQPacker pack and order media queries as they are defined. See
-also [The "First Win" Algorithm][2]. If you want sort queries automatically,
+also [The "First Win" Algorithm][2]. If you want to sort queries automatically,
 pass `sort: true` to this module.
 
 ```javascript
@@ -211,8 +211,8 @@ You can specify both [options of this package][7] and [PostCSS options][3] with
 `options` field of this task.
 
 
-KNOWN ISSUE
------------
+KNOWN ISSUES
+------------
 
 ### The "First Win" Algorithm
 
@@ -283,8 +283,10 @@ I suggest defining a query order at first:
 @media (min-width: 640px) { /*! Wider than 640px */ }
 ```
 
+Or sort [`min-width` queries automatically][7].
 
-### Multiple Classes
+
+### CSS Applying Order
 
 CSS MQPacker changes order of rulesets. This may breaks CSS applying order.
 
