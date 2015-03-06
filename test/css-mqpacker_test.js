@@ -38,7 +38,7 @@ exports['Public API'] = function (test) {
 
 exports['Option: PostCSS options'] = function (test) {
   var expected;
-  var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}';
+  var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}\n\n/*# sourceMappingURL=from.css.map */\n';
   var opts = {
     from: 'from.css',
     map: {
