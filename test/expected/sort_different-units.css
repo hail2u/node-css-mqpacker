@@ -23,13 +23,3 @@
         z-index: 5
     }
 }
-@media (min-width: 15.75pt) {
-    .foo {
-        z-index: 6
-    }
-}
-@media (min-width: 1.375pc) {
-    .foo {
-        z-index: 7
-    }
-}

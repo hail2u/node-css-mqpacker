@@ -4,12 +4,6 @@
   }
 }
 
-@media (min-width: 1.375pc) {
-  .foo {
-    z-index: 7;
-  }
-}
-
 @media (min-width: 1.125rem) {
   .foo {
     z-index: 3;
@@ -19,12 +13,6 @@
 @media (min-width: 2.29ex) {
   .foo {
     z-index: 4;
-  }
-}
-
-@media (min-width: 15.75pt) {
-  .foo {
-    z-index: 6;
   }
 }
 

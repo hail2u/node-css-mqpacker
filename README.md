@@ -105,9 +105,9 @@ mqpacker({
 }).pack(css);
 ```
 
-Currently, this option only supports `min-width` queries. If you want to do
-more, you need to create your own sorting function and pass it to this option
-like this:
+Currently, this option only supports `min-width` queries with specific units
+(`ch`, `em`, `ex`, `px`, and `rem`). If you want to do more, you need to create
+your own sorting function and pass it to this option like this:
 
 ```javascript
 mqpacker({
