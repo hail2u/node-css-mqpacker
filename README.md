@@ -173,6 +173,28 @@ postcss().use(
 ```
 
 
+CLI USAGE
+---------
+
+This package also installs a command line interface.
+
+    $ node ./node_modules/.bin/mqpacker --help
+    Usage: mqpacker [options] INPUT [OUTPUT]
+    
+    Description:
+      Pack same CSS media query rules into one media query rule.
+    
+    Options:
+      -s, --sort       Sort `min-width` queries.
+          --sourcemap  Create source map file.
+      -h, --help       Show this message.
+      -v, --version    Print version information.
+    
+    Use a single dash for INPUT to read CSS from standard input.
+
+The `--sort` option does not currently support a custom function.
+
+
 GRUNT PLUGIN USAGE
 ------------------
 

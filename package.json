@@ -3,11 +3,15 @@
   "description": "Pack same CSS media query rules into one media query rule.",
   "version": "3.1.0",
   "author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
+  "bin": {
+    "mqpacker": "./bin/mqpacker"
+  },
   "bugs": {
     "url": "https://github.com/hail2u/node-css-mqpacker/issues"
   },
   "dependencies": {
     "fs-extra": "^0.16.0",
+    "minimist": "^1.1.1",
     "postcss": "^4.0.0"
   },
   "devDependencies": {
@@ -15,6 +19,7 @@
   },
   "files": [
     "README.md",
+    "bin",
     "index.js",
     "lib",
     "package.json",
