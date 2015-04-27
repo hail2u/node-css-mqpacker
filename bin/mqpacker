@@ -24,19 +24,27 @@ var showHelp = function () {
   return;
 };
 var pack = function (s, o) {
-  var packed = mqpacker(o.mqpacker).pack(s, o.postcss);
+  mqpacker(o.mqpacker).pack(s, o.postcss).then(function (result) {
+    if (!o.postcss.to) {
+      process.stdout.write(result.css);
 
-  if (!o.postcss.to) {
-    process.stdout.write(packed.css);
+      return;
+    }
 
-    return;
-  }
+    fs.writeFileSync(o.postcss.to, result.css);
 
-  fs.writeFileSync(o.postcss.to, packed.css);
-
-  if (packed.map) {
-    fs.writeFileSync(o.postcss.to + '.map', packed.map);
-  }
+    if (result.map) {
+      fs.writeFileSync(o.postcss.to + '.map', result.map);
+    }
+  }, function (error) {
+    console.error([
+      error.file,
+      error.line,
+      error.column,
+      ' ' + error.reason
+    ].join(':'));
+    process.exit(1);
+  });
 };
 var argv = minimist(process.argv.slice(2), {
   boolean: [
