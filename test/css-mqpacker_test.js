@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var path = require('path');
-var postcss = require('postcss');
+var fs = require("fs");
+var path = require("path");
+var postcss = require("postcss");
 
-var mqpacker = require('../index');
+var mqpacker = require("../index");
 
-exports['Public API'] = function (test) {
+exports["Public API"] = function (test) {
   var expected;
-  var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}';
+  var input = "@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}";
   expected = postcss().process(input).css;
 
   test.expect(4);
@@ -36,11 +36,11 @@ exports['Public API'] = function (test) {
   test.done();
 };
 
-exports['Option: PostCSS options'] = function (test) {
+exports["Option: PostCSS options"] = function (test) {
   var expected;
-  var input = '@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}\n\n/*# sourceMappingURL=from.css.map */\n';
+  var input = "@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}\n\n/*# sourceMappingURL=from.css.map */\n";
   var opts = {
-    from: 'from.css',
+    from: "from.css",
     map: {
       inline: false
     }
@@ -63,11 +63,11 @@ exports['Option: PostCSS options'] = function (test) {
   test.done();
 };
 
-exports['Option: sort'] = function (test) {
+exports["Option: sort"] = function (test) {
   var a;
   var b = mqpacker();
-  var expected = '@media (min-width: 1px) {\n    .foo {\n        z-index: 1\n    }\n}\n@media (min-width: 2px) {\n    .foo {\n        z-index: 2\n    }\n}';
-  var input = '@media (min-width: 2px) { .foo { z-index: 2 } }@media (min-width: 1px) { .foo { z-index: 1 } }';
+  var expected = "@media (min-width: 1px) {\n    .foo {\n        z-index: 1\n    }\n}\n@media (min-width: 2px) {\n    .foo {\n        z-index: 2\n    }\n}";
+  var input = "@media (min-width: 2px) { .foo { z-index: 2 } }@media (min-width: 1px) { .foo { z-index: 1 } }";
   var opts = {
     sort: true
   };
@@ -107,19 +107,19 @@ exports['Option: sort'] = function (test) {
   test.done();
 };
 
-exports['Real CSS'] = function (test) {
-  var testCases = fs.readdirSync(path.join(__dirname, 'fixtures'));
+exports["Real CSS"] = function (test) {
+  var testCases = fs.readdirSync(path.join(__dirname, "fixtures"));
 
   var loadExpected = function (file) {
-    file = path.join(__dirname, 'expected', file);
+    file = path.join(__dirname, "expected", file);
 
-    return fs.readFileSync(file, 'utf8');
+    return fs.readFileSync(file, "utf8");
   };
 
   var loadInput = function (file) {
-    file = path.join(__dirname, 'fixtures', file);
+    file = path.join(__dirname, "fixtures", file);
 
-    return fs.readFileSync(file, 'utf8');
+    return fs.readFileSync(file, "utf8");
   };
 
   test.expect(testCases.length);
@@ -129,7 +129,7 @@ exports['Real CSS'] = function (test) {
       sort: false
     };
 
-    if (testCase.indexOf('sort_') === 0) {
+    if (testCase.indexOf("sort_") === 0) {
       opts.sort = true;
     }
 

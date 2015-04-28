@@ -1,1 +1,1 @@
-module.exports = require('./lib/css-mqpacker');
+module.exports = require("./lib/css-mqpacker");
