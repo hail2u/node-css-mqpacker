@@ -36,14 +36,18 @@ var pack = function (s, o) {
     if (result.map) {
       fs.writeFileSync(o.postcss.to + ".map", result.map);
     }
-  }, function (error) {
-    console.error([
-      error.file,
-      error.line,
-      error.column,
-      " " + error.reason
-    ].join(":"));
-    process.exit(1);
+  }).catch(function (error) {
+    if (error.name === "CssSyntaxError") {
+      console.error([
+        error.file,
+        error.line,
+        error.column,
+        " " + error.reason
+      ].join(":"));
+      process.exit(1);
+    }
+
+    throw error;
   });
 };
 var argv = minimist(process.argv.slice(2), {
