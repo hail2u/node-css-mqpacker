@@ -6,6 +6,56 @@ Pack same CSS media query rules into one media query rule.
 Written with [PostCSS][1].
 
 
+SYNOPSIS
+--------
+
+A CSS file processed with a CSS pre-processor may have same queries that can
+merge:
+
+```css
+.foo::before {
+  content: "foo on small";
+}
+
+@media screen and (min-width: 769px) {
+  .foo::before {
+    content: "foo on medium";
+  }
+}
+
+.bar::before {
+  content: "bar on small";
+}
+
+@media screen and (min-width: 769px) {
+  .bar::before {
+    content: "bar on medium";
+  }
+}
+```
+
+This PostCSS plugin packs exactly same queries (and optionaly sorts) like this:
+
+```css
+.foo::before {
+  content: "foo on small";
+}
+
+.bar::before {
+  content: "bar on small";
+}
+
+@media screen and (min-width: 769px) {
+  .foo::before {
+    content: "foo on medium";
+  }
+  .bar::before {
+    content: "bar on medium";
+  }
+}
+```
+
+
 INSTALLATION
 ------------
 
@@ -35,59 +85,6 @@ var processed = mqpacker.pack(original, {
 });
 console.log(processed.css);
 ```
-
-If `test.css` has:
-
-```css
-@charset "UTF-8";
-
-.foo::before {
-  content: "foo on small";
-}
-
-@media screen and (min-width: 769px) {
-  .foo::before {
-    content: "foo on medium";
-  }
-}
-
-.bar::before {
-  content: "bar on small";
-}
-
-@media screen and (min-width: 769px) {
-  .bar::before {
-    content: "bar on medium";
-  }
-}
-```
-
-You will get following output:
-
-```css
-@charset "UTF-8";
-
-.foo::before {
-  content: "foo on small";
-}
-
-.bar::before {
-  content: "bar on small";
-}
-
-@media screen and (min-width: 769px) {
-  .foo::before {
-    content: "foo on medium";
-  }
-  .bar::before {
-    content: "bar on medium";
-  }
-}
-
-/*# sourceMappingURL=to.css.map */
-```
-
-Sweet!
 
 
 OPTIONS
