@@ -56,14 +56,14 @@ This PostCSS plugin packs exactly same queries (and optionaly sorts) like this:
 ```
 
 
-INSTALLATION
-------------
+INSTALL
+-------
 
     $ npm install css-mqpacker
 
 
-QUICK USAGE
------------
+USAGE
+-----
 
 Read `from.css`, process its content, and output processed CSS to STDOUT.
 
@@ -85,6 +85,84 @@ var processed = mqpacker.pack(original, {
 });
 console.log(processed.css);
 ```
+
+
+### As PostCSS plugin
+
+Of course, this package can be used as PostCSS plugin:
+
+```js
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs');
+var postcss = require('postcss');
+
+var original = fs.readFileSync('from.css', 'utf8');
+var processed = postcsse([
+  require('autoprefixer-core'),
+  require('css-mqpacker')
+]);
+console.log(processed.css);
+```
+
+### As CLI Program
+
+This package also installs a command line interface.
+
+    $ node ./node_modules/.bin/mqpacker --help
+    Usage: mqpacker [options] INPUT [OUTPUT]
+    
+    Description:
+      Pack same CSS media query rules into one media query rule.
+    
+    Options:
+      -s, --sort       Sort `min-width` queries.
+          --sourcemap  Create source map file.
+      -h, --help       Show this message.
+      -v, --version    Print version information.
+    
+    Use a single dash for INPUT to read CSS from standard input.
+
+When PostCSS failed to parse INPUT, CLI shows a CSS parse error in GNU error
+format instead of Node.js stack trace.
+
+The `--sort` option does not currently support a custom function.
+
+
+### As Grunt Plugin
+
+This package also installs a Grunt plugin. You can enable this plugin in
+`Gruntfile.js` of your project like that:
+
+    grunt.loadNpmTasks('css-mqpacker');
+
+To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
+
+    grunt.initConfig({
+      'css_mqpacker': {
+        options: {
+          map: {
+            inline: false,
+            sourcesContent: false
+          }
+        },
+    
+        main: {
+          cwd: 'src/css/',
+          dest: 'build/css/',
+          expand: true,
+          ext: '.min.css',
+          src: ['**/*.css']
+        }
+      }
+    });
+
+You can specify both [options of this package][7] and [PostCSS options][3] with
+`options` field of this task.
+
+This was not tested. I suggest using [`grunt-postcss`][5].
 
 
 OPTIONS
@@ -168,69 +246,6 @@ postcss().use(
   mqpacker.postcss
 ).process(css);
 ```
-
-
-CLI USAGE
----------
-
-This package also installs a command line interface.
-
-    $ node ./node_modules/.bin/mqpacker --help
-    Usage: mqpacker [options] INPUT [OUTPUT]
-    
-    Description:
-      Pack same CSS media query rules into one media query rule.
-    
-    Options:
-      -s, --sort       Sort `min-width` queries.
-          --sourcemap  Create source map file.
-      -h, --help       Show this message.
-      -v, --version    Print version information.
-    
-    Use a single dash for INPUT to read CSS from standard input.
-
-When PostCSS failed to parse INPUT, CLI shows a CSS parse error in GNU error
-format instead of Node.js stack trace.
-
-The `--sort` option does not currently support a custom function.
-
-
-GRUNT PLUGIN USAGE
-------------------
-
-This package also installs a Grunt plugin. You can enable this plugin in
-`Gruntfile.js` of your project like that:
-
-    grunt.loadNpmTasks('css-mqpacker');
-
-This was not tested. I suggest using [`grunt-postcss`][5].
-
-
-### Example Config
-
-To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
-
-    grunt.initConfig({
-      'css_mqpacker': {
-        options: {
-          map: {
-            inline: false,
-            sourcesContent: false
-          }
-        },
-    
-        main: {
-          cwd: 'src/css/',
-          dest: 'build/css/',
-          expand: true,
-          ext: '.min.css',
-          src: ['**/*.css']
-        }
-      }
-    });
-
-You can specify both [options of this package][7] and [PostCSS options][3] with
-`options` field of this task.
 
 
 KNOWN ISSUES
