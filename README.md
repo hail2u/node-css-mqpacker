@@ -65,6 +65,28 @@ INSTALL
 USAGE
 -----
 
+Of course, this package can be used as PostCSS plugin:
+
+```js
+#!/usr/bin/env node
+
+'use strict';
+
+var fs = require('fs');
+var postcss = require('postcss');
+
+var css = fs.readFileSync('from.css', 'utf8');
+postcss([
+  require('autoprefixer-core'),
+  require('css-mqpacker')
+]).process(css).then(function (result) {
+  console.log(result.css);
+});
+```
+
+
+### As standard Node.js package
+
 Read `from.css`, process its content, and output processed CSS to STDOUT.
 
 ```js
@@ -86,26 +108,6 @@ var processed = mqpacker.pack(original, {
 console.log(processed.css);
 ```
 
-
-### As PostCSS plugin
-
-Of course, this package can be used as PostCSS plugin:
-
-```js
-#!/usr/bin/env node
-
-'use strict';
-
-var fs = require('fs');
-var postcss = require('postcss');
-
-var original = fs.readFileSync('from.css', 'utf8');
-var processed = postcss([
-  require('autoprefixer-core'),
-  require('css-mqpacker')
-]);
-console.log(processed.css);
-```
 
 ### As CLI Program
 
