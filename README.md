@@ -100,7 +100,7 @@ var fs = require('fs');
 var postcss = require('postcss');
 
 var original = fs.readFileSync('from.css', 'utf8');
-var processed = postcsse([
+var processed = postcss([
   require('autoprefixer-core'),
   require('css-mqpacker')
 ]);
