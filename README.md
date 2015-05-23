@@ -70,15 +70,15 @@ Of course, this package can be used as PostCSS plugin:
 ```javascript
 #!/usr/bin/env node
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var postcss = require('postcss');
+var fs = require("fs");
+var postcss = require("postcss");
 
-var css = fs.readFileSync('from.css', 'utf8');
+var css = fs.readFileSync("from.css", "utf8");
 postcss([
-  require('autoprefixer-core'),
-  require('css-mqpacker')
+  require("autoprefixer-core"),
+  require("css-mqpacker")
 ]).process(css).then(function (result) {
   console.log(result.css);
 });
@@ -92,18 +92,18 @@ Read `from.css`, process its content, and output processed CSS to STDOUT.
 ```javascript
 #!/usr/bin/env node
 
-'use strict';
+"use strict";
 
-var fs = require('fs');
-var mqpacker = require('css-mqpacker');
+var fs = require("fs");
+var mqpacker = require("css-mqpacker");
 
-var original = fs.readFileSync('from.css', 'utf8');
+var original = fs.readFileSync("from.css", "utf8");
 var processed = mqpacker.pack(original, {
-  from: 'from.css',
+  from: "from.css",
   map: {
     inline: false
   },
-  to: 'to.css'
+  to: "to.css"
 });
 console.log(processed.css);
 ```
@@ -138,12 +138,12 @@ The `--sort` option does not currently support a custom function.
 This package also installs a Grunt plugin. You can enable this plugin in
 `Gruntfile.js` of your project like that:
 
-    grunt.loadNpmTasks('css-mqpacker');
+    grunt.loadNpmTasks("css-mqpacker");
 
 To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
 
     grunt.initConfig({
-      'css_mqpacker': {
+      "css_mqpacker": {
         options: {
           map: {
             inline: false,
@@ -152,11 +152,11 @@ To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
         },
     
         main: {
-          cwd: 'src/css/',
-          dest: 'build/css/',
+          cwd: "src/css/",
+          dest: "build/css/",
           expand: true,
-          ext: '.min.css',
-          src: ['**/*.css']
+          ext: ".min.css",
+          src: ["**/*.css"]
         }
       }
     });
@@ -211,19 +211,19 @@ The second argument is optional. The `options` is same as the second argument of
 PostCSS's `process()` method. This is useful for generating Source Map.
 
 ```javascript
-var fs = require('fs');
-var mqpacker = require('css-mqpacker');
+var fs = require("fs");
+var mqpacker = require("css-mqpacker");
 
-var css = fs.readFileSync('from.css', 'utf8');
+var css = fs.readFileSync("from.css", "utf8");
 var result = mqpacker.pack(css, {
-  from: 'from.css',
+  from: "from.css",
   map: {
     inline: false
   },
-  to: 'to.css'
+  to: "to.css"
 });
-fs.writeFileSync('to.css', result.css);
-fs.writeFileSync('to.css.map', result.map);
+fs.writeFileSync("to.css", result.css);
+fs.writeFileSync("to.css.map", result.map);
 ```
 
 See also [PostCSS document][2] for more about this `options`.
@@ -237,11 +237,11 @@ You can use this property for combining with other PostCSS processors such as
 [Autoprefixer][4].
 
 ```javascript
-var autoprefixer = require('autoprefixer');
-var mqpacker = require('css-mqpacker');
-var postcss = require('postcss');
+var autoprefixer = require("autoprefixer");
+var mqpacker = require("css-mqpacker");
+var postcss = require("postcss");
 
-var css = fs.readFileSync('test.css', 'utf8');
+var css = fs.readFileSync("test.css", "utf8");
 postcss().use(
   autoprefixer.postcss
 ).use(
