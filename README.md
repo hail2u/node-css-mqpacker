@@ -67,7 +67,7 @@ USAGE
 
 Of course, this package can be used as PostCSS plugin:
 
-```js
+```javascript
 #!/usr/bin/env node
 
 'use strict';
@@ -89,7 +89,7 @@ postcss([
 
 Read `from.css`, process its content, and output processed CSS to STDOUT.
 
-```js
+```javascript
 #!/usr/bin/env node
 
 'use strict';
