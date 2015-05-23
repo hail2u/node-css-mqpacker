@@ -24,7 +24,7 @@ module.exports = function (grunt) {
       dest = file.dest;
 
       if (!fs.existsSync(src)) {
-        grunt.log.warn("Source file \"" + src + "\" not found.");
+        grunt.log.warn('Source file "' + src + '" not found.');
 
         return;
       }
@@ -36,12 +36,12 @@ module.exports = function (grunt) {
 
       processed = mqpacker(options).pack(fs.readFileSync(src, "utf8"), options);
       fs.outputFileSync(dest, processed.css);
-      grunt.log.writeln("File \"" + dest + "\" created.");
+      grunt.log.writeln('File "' + dest + '" created.');
 
       if (processed.map) {
         map = dest + ".map";
         fs.outputFileSync(map, processed.map);
-        grunt.log.writeln("File \"" + map + "\" created.");
+        grunt.log.writeln('File "' + map + '" created.');
       }
     });
   });
