@@ -34,7 +34,7 @@ merge:
 }
 ```
 
-This PostCSS plugin packs exactly same queries (and optionaly sorts) like this:
+This PostCSS plugin packs exactly same queries (and optionally sorts) like this:
 
 ```css
 .foo::before {
@@ -231,7 +231,7 @@ See also [PostCSS document][3] for more about this `options`.
 
 ### postcss
 
-Returns PostCSS processor for backwards combatibility.
+Returns PostCSS processor for backwards compatibility.
 
 You can use this property for combining with other PostCSS processors such as
 [Autoprefixer][6].
