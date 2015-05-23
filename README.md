@@ -161,10 +161,10 @@ To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
       }
     });
 
-You can specify both [options of this package][7] and [PostCSS options][3] with
+You can specify both [options of this package][2] and [PostCSS options][3] with
 `options` field of this task.
 
-This was not tested. I suggest using [`grunt-postcss`][5].
+This was not tested. I suggest using [`grunt-postcss`][4].
 
 
 OPTIONS
@@ -173,7 +173,7 @@ OPTIONS
 ### sort
 
 By default, CSS MQPacker pack and order media queries as they are defined. See
-also [The "First Win" Algorithm][2]. If you want to sort queries automatically,
+also [The "First Win" Algorithm][5]. If you want to sort queries automatically,
 pass `sort: true` to this module.
 
 ```javascript
@@ -208,7 +208,7 @@ API
 Packs media queries in `css`.
 
 The second argument is optional. The `options` is same as the second argument of
-PostCSS's `process()` method. This is useful for generating Source Map.
+PostCSS’s `process()` method. This is useful for generating Source Map.
 
 ```javascript
 var fs = require("fs");
@@ -226,15 +226,15 @@ fs.writeFileSync("to.css", result.css);
 fs.writeFileSync("to.css.map", result.map);
 ```
 
-See also [PostCSS document][2] for more about this `options`.
+See also [PostCSS document][3] for more about this `options`.
 
 
 ### postcss
 
-Returns [PostCSS processor][3].
+Returns PostCSS processor for backwards combatibility.
 
 You can use this property for combining with other PostCSS processors such as
-[Autoprefixer][4].
+[Autoprefixer][6].
 
 ```javascript
 var autoprefixer = require("autoprefixer");
@@ -380,9 +380,9 @@ MIT: http://hail2u.mit-license.org/2014
 
 
 [1]: https://github.com/postcss/postcss
-[2]: #the-first-win-algorithm
-[3]: https://github.com/postcss/postcss#source-map-1
-[4]: https://github.com/postcss/postcss#processor
-[5]: https://github.com/postcss/autoprefixer-core
-[6]: https://github.com/nDmitry/grunt-postcss
-[7]: #options
+[2]: #options
+[3]: https://github.com/postcss/postcss#source-map
+[4]: https://github.com/nDmitry/grunt-postcss
+[5]: #the-first-win-algorithm
+[6]: https://github.com/postcss/autoprefixer-core
+[7]: #sort
