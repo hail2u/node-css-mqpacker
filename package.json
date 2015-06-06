@@ -29,14 +29,11 @@
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "keywords": [
     "css",
-    "optimization",
-    "mediaquery",
     "media",
     "query",
-    "sourcemap",
     "source",
     "map",
-    "postcss",
+    "postcss-plugin",
     "gruntplugin"
   ],
   "license": "MIT",
