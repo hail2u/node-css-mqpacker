@@ -77,8 +77,8 @@ var postcss = require("postcss");
 
 var css = fs.readFileSync("from.css", "utf8");
 postcss([
-  require("autoprefixer-core"),
-  require("css-mqpacker")
+  require("autoprefixer-core")(),
+  require("css-mqpacker")()
 ]).process(css).then(function (result) {
   console.log(result.css);
 });
@@ -177,21 +177,25 @@ also [The "First Win" Algorithm][5]. If you want to sort queries automatically,
 pass `sort: true` to this module.
 
 ```javascript
-mqpacker({
-  sort: true
-}).pack(css);
+postcss([
+  mqpacker({
+    sort: true
+  })
+]).process(css);
 ```
 
 Currently, this option only supports `min-width` queries with specific units
 (`ch`, `em`, `ex`, `px`, and `rem`). If you want to do more, you need to create
-your own sorting function and pass it to this option like this:
+your own sorting function and pass it to this module like this:
 
 ```javascript
-mqpacker({
-  sort: function (a, b) {
-    return a.localeCompare(b);
-  }
-}).pack(css);
+postcss([
+  mqpacker({
+    sort: function (a, b) {
+      return a.localeCompare(b);
+    }
+  })
+]).process(css);
 ```
 
 In this example, all your queries will sort by A-Z order.
@@ -227,27 +231,6 @@ fs.writeFileSync("to.css.map", result.map);
 ```
 
 See also [PostCSS document][3] for more about this `options`.
-
-
-### postcss
-
-Returns PostCSS processor for backwards compatibility.
-
-You can use this property for combining with other PostCSS processors such as
-[Autoprefixer][6].
-
-```javascript
-var autoprefixer = require("autoprefixer");
-var mqpacker = require("css-mqpacker");
-var postcss = require("postcss");
-
-var css = fs.readFileSync("test.css", "utf8");
-postcss().use(
-  autoprefixer.postcss
-).use(
-  mqpacker.postcss
-).process(css);
-```
 
 
 KNOWN ISSUES
@@ -322,7 +305,7 @@ I suggest defining a query order at first:
 @media (min-width: 640px) { /*! Wider than 640px */ }
 ```
 
-Or sort [`min-width` queries automatically][7].
+Or sort [`min-width` queries automatically][6].
 
 
 ### CSS Applying Order
@@ -384,5 +367,4 @@ MIT: http://hail2u.mit-license.org/2014
 [3]: https://github.com/postcss/postcss#source-map
 [4]: https://github.com/nDmitry/grunt-postcss
 [5]: #the-first-win-algorithm
-[6]: https://github.com/postcss/autoprefixer-core
-[7]: #sort
+[6]: #sort

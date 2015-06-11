@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         options.to = dest;
       }
 
-      processed = mqpacker(options).pack(fs.readFileSync(src, "utf8"), options);
+      processed = mqpacker.pack(fs.readFileSync(src, "utf8"), options);
       fs.outputFileSync(dest, processed.css);
       grunt.log.writeln('File "' + dest + '" created.');
 

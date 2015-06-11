@@ -25,17 +25,17 @@ var showHelp = function () {
   return;
 };
 var pack = function (s, o) {
-  mqpacker(o.mqpacker).pack(s, o.postcss).then(function (result) {
-    if (!o.postcss.to) {
+  mqpacker.pack(s, o).then(function (result) {
+    if (!o.to) {
       process.stdout.write(result.css);
 
       return;
     }
 
-    fs.writeFileSync(o.postcss.to, result.css);
+    fs.writeFileSync(o.to, result.css);
 
     if (result.map) {
-      fs.writeFileSync(o.postcss.to + ".map", result.map);
+      fs.writeFileSync(o.to + ".map", result.map);
     }
   }).catch(function (error) {
     if (error.name === "CssSyntaxError") {
@@ -88,37 +88,34 @@ switch (true) {
 
   default:
     var css = "";
-    var options = {
-      mqpacker: {},
-      postcss: {}
-    };
+    var options = {};
     var stdin;
 
     if (argv.sort) {
-      options.mqpacker.sort = true;
+      options.sort = true;
     }
 
     if (argv.sourcemap) {
-      options.postcss.map = true;
+      options.map = true;
     }
 
-    options.postcss.from = argv._[0];
+    options.from = argv._[0];
 
     if (argv._[1]) {
-      options.postcss.to = argv._[1];
+      options.to = argv._[1];
     }
 
-    if (options.postcss.map && options.postcss.to) {
-      options.postcss.map = {
+    if (options.map && options.to) {
+      options.map = {
         inline: false
       };
     }
 
-    if (options.postcss.from !== "-") {
-      css = fs.readFileSync(options.postcss.from, "utf8");
+    if (options.from !== "-") {
+      css = fs.readFileSync(options.from, "utf8");
       pack(css, options);
     } else {
-      delete options.postcss.from;
+      delete options.from;
       stdin = process.openStdin();
       stdin.setEncoding("utf-8");
       stdin.on("data", function (chunk) {

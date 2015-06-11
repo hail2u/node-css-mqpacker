@@ -11,25 +11,15 @@ exports["Public API"] = function (test) {
   var input = "@media (min-width:1px) {\n    .foo {\n        color: black\n    }\n}";
   expected = postcss().process(input).css;
 
-  test.expect(4);
+  test.expect(2);
+
+  test.strictEqual(
+    postcss([mqpacker()]).process(input).css,
+    expected
+  );
 
   test.strictEqual(
     mqpacker.pack(input).css,
-    expected
-  );
-
-  test.strictEqual(
-    mqpacker().pack(input).css,
-    expected
-  );
-
-  test.strictEqual(
-    postcss().use(mqpacker.postcss).process(input).css,
-    expected
-  );
-
-  test.strictEqual(
-    postcss().use(mqpacker().postcss).process(input).css,
     expected
   );
 
@@ -64,24 +54,16 @@ exports["Option: PostCSS options"] = function (test) {
 };
 
 exports["Option: sort"] = function (test) {
-  var a;
-  var b = mqpacker();
   var expected = "@media (min-width: 1px) {\n    .foo {\n        z-index: 1\n    }\n}\n@media (min-width: 2px) {\n    .foo {\n        z-index: 2\n    }\n}";
   var input = "@media (min-width: 2px) { .foo { z-index: 2 } }@media (min-width: 1px) { .foo { z-index: 1 } }";
   var opts = {
     sort: true
   };
-  a = mqpacker(opts);
 
-  test.expect(5);
+  test.expect(4);
 
   test.notStrictEqual(
     mqpacker.pack(input).css,
-    expected
-  );
-
-  test.strictEqual(
-    mqpacker(opts).pack(input).css,
     expected
   );
 
@@ -91,16 +73,16 @@ exports["Option: sort"] = function (test) {
   );
 
   test.notStrictEqual(
-    postcss().use(a.postcss).process(input).css,
-    postcss().use(b.postcss).process(input).css
+    postcss([mqpacker()]).process(input).css,
+    postcss([mqpacker(opts)]).process(input).css
   );
 
   test.strictEqual(
-    mqpacker({
+    mqpacker.pack(input, {
       sort: function (c, d) {
         return c.localeCompare(d);
       }
-    }).pack(input).css,
+    }).css,
     expected
   );
 
