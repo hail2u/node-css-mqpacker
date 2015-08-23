@@ -1,7 +1,7 @@
 {
   "name": "css-mqpacker",
   "description": "Pack same CSS media query rules into one media query rule.",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
   "bin": {
     "mqpacker": "./bin/mqpacker"
