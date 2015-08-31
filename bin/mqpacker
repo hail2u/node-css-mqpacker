@@ -76,53 +76,53 @@ if (argv._.length < 1) {
 }
 
 switch (true) {
-  case argv.version:
-    console.log(binname + " v" + pkg.version);
+case argv.version:
+  console.log(binname + " v" + pkg.version);
 
-    break;
+  break;
 
-  case argv.help:
-    showHelp();
+case argv.help:
+  showHelp();
 
-    break;
+  break;
 
-  default:
-    var css = "";
-    var options = {};
-    var stdin;
+default:
+  var css = "";
+  var options = {};
+  var stdin;
 
-    if (argv.sort) {
-      options.sort = true;
-    }
+  if (argv.sort) {
+    options.sort = true;
+  }
 
-    if (argv.sourcemap) {
-      options.map = true;
-    }
+  if (argv.sourcemap) {
+    options.map = true;
+  }
 
-    options.from = argv._[0];
+  options.from = argv._[0];
 
-    if (argv._[1]) {
-      options.to = argv._[1];
-    }
+  if (argv._[1]) {
+    options.to = argv._[1];
+  }
 
-    if (options.map && options.to) {
-      options.map = {
-        inline: false
-      };
-    }
+  if (options.map && options.to) {
+    options.map = {
+      inline: false
+    };
+  }
 
-    if (options.from !== "-") {
-      css = fs.readFileSync(options.from, "utf8");
+  if (options.from !== "-") {
+    css = fs.readFileSync(options.from, "utf8");
+    pack(css, options);
+  } else {
+    delete options.from;
+    stdin = process.openStdin();
+    stdin.setEncoding("utf-8");
+    stdin.on("data", function (chunk) {
+      css += chunk;
+    });
+    stdin.on("end", function () {
       pack(css, options);
-    } else {
-      delete options.from;
-      stdin = process.openStdin();
-      stdin.setEncoding("utf-8");
-      stdin.on("data", function (chunk) {
-        css += chunk;
-      });
-      stdin.on("end", function () {
-        pack(css, options);
-      });
-    }
+    });
+  }
 }
