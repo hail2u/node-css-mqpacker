@@ -1,5 +1,6 @@
 {
   "rules": {
-    "no-process-exit": false
+    "no-console": 0,
+    "no-process-exit": 0
   }
 }
