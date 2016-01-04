@@ -18,11 +18,9 @@
     "nodeunit": "^0.9.0"
   },
   "files": [
-    "README.md",
     "bin",
     "index.js",
     "lib",
-    "package.json",
     "tasks"
   ],
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
