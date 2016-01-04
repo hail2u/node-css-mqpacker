@@ -23,8 +23,7 @@
     "index.js",
     "lib",
     "package.json",
-    "tasks",
-    "test"
+    "tasks"
   ],
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "keywords": [
