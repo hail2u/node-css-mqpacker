@@ -26,12 +26,10 @@
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "keywords": [
     "css",
+    "gruntplugin",
     "media",
-    "query",
-    "source",
-    "map",
     "postcss-plugin",
-    "gruntplugin"
+    "query"
   ],
   "license": "MIT",
   "main": "index.js",
