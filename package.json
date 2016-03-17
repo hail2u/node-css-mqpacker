@@ -10,7 +10,7 @@
     "url": "https://github.com/hail2u/node-css-mqpacker/issues"
   },
   "dependencies": {
-    "fs-extra": "^0.16.0",
+    "fs-extra": "^0.21.0",
     "minimist": "^1.1.1",
     "postcss": "^5.0.0"
   },
