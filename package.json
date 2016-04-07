@@ -10,7 +10,6 @@
     "url": "https://github.com/hail2u/node-css-mqpacker/issues"
   },
   "dependencies": {
-    "fs-extra": "^0.26.7",
     "minimist": "^1.1.1",
     "postcss": "^5.0.0"
   },
@@ -20,13 +19,11 @@
   "files": [
     "bin",
     "index.js",
-    "lib",
-    "tasks"
+    "lib"
   ],
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "keywords": [
     "css",
-    "gruntplugin",
     "media",
     "postcss-plugin",
     "query"

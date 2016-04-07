@@ -133,47 +133,13 @@ format instead of Node.js stack trace.
 The `--sort` option does not currently support a custom function.
 
 
-### As Grunt Plugin
-
-This package also installs a Grunt plugin. You can enable this plugin in
-`Gruntfile.js` of your project like that:
-
-    grunt.loadNpmTasks("css-mqpacker");
-
-To pack `src/css/**/*.css` to `build/css/**/*.min.css` with source map:
-
-    grunt.initConfig({
-      "css_mqpacker": {
-        options: {
-          map: {
-            inline: false,
-            sourcesContent: false
-          }
-        },
-    
-        main: {
-          cwd: "src/css/",
-          dest: "build/css/",
-          expand: true,
-          ext: ".min.css",
-          src: ["**/*.css"]
-        }
-      }
-    });
-
-You can specify both [options of this package][2] and [PostCSS options][3] with
-`options` field of this task.
-
-This was not tested. I suggest using [`grunt-postcss`][4].
-
-
 OPTIONS
 -------
 
 ### sort
 
 By default, CSS MQPacker pack and order media queries as they are defined. See
-also [The "First Win" Algorithm][5]. If you want to sort queries automatically,
+also [The "First Win" Algorithm][2]. If you want to sort queries automatically,
 pass `sort: true` to this module.
 
 ```javascript
@@ -305,7 +271,7 @@ I suggest defining a query order at first:
 @media (min-width: 640px) { /*! Wider than 640px */ }
 ```
 
-Or sort [`min-width` queries automatically][6].
+Or sort [`min-width` queries automatically][4].
 
 
 ### CSS Applying Order
@@ -363,8 +329,6 @@ MIT: http://hail2u.mit-license.org/2014
 
 
 [1]: https://github.com/postcss/postcss
-[2]: #options
+[2]: #the-first-win-algorithm
 [3]: https://github.com/postcss/postcss#source-map
-[4]: https://github.com/nDmitry/grunt-postcss
-[5]: #the-first-win-algorithm
-[6]: #sort
+[4]: #sort
