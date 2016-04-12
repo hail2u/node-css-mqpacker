@@ -16,11 +16,6 @@
   "devDependencies": {
     "nodeunit": "^0.9.0"
   },
-  "files": [
-    "bin",
-    "index.js",
-    "lib"
-  ],
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "keywords": [
     "css",
