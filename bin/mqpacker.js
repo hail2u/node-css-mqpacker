@@ -89,7 +89,6 @@ case argv.help:
 default:
   var css = "";
   var options = {};
-  var stdin;
 
   if (argv.sort) {
     options.sort = true;
@@ -111,18 +110,11 @@ default:
     };
   }
 
-  if (options.from !== "-") {
-    css = fs.readFileSync(options.from, "utf8");
-    pack(css, options);
-  } else {
+  if (options.from === "-") {
     delete options.from;
-    stdin = process.openStdin();
-    stdin.setEncoding("utf-8");
-    stdin.on("data", function (chunk) {
-      css += chunk;
-    });
-    stdin.on("end", function () {
-      pack(css, options);
-    });
+    argv._[0] = process.stdin.fd;
   }
+
+  css = fs.readFileSync(argv._[0], "utf8");
+  pack(css, options);
 }
