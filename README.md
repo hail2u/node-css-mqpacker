@@ -138,9 +138,8 @@ OPTIONS
 
 ### sort
 
-By default, CSS MQPacker pack and order media queries as they are defined. See
-also [The "First Win" Algorithm][2]. If you want to sort queries automatically,
-pass `sort: true` to this module.
+By default, CSS MQPacker pack and order media queries as they are defined. If
+you want to sort queries automatically, pass `sort: true` to this module.
 
 ```javascript
 postcss([
@@ -196,130 +195,7 @@ fs.writeFileSync("to.css", result.css);
 fs.writeFileSync("to.css.map", result.map);
 ```
 
-See also [PostCSS document][3] for more about this `options`.
-
-
-KNOWN ISSUES
-------------
-
-### The "First Win" Algorithm
-
-CSS MQPacker is implemented with the "first win" algorithm. This means:
-
-```css
-.foo {
-  width: 10px;
-}
-
-@media (min-width: 640px) {
-  .foo {
-    width: 150px;
-  }
-}
-
-.bar {
-  width: 20px;
-}
-
-@media (min-width: 320px) {
-  .bar {
-    width: 200px;
-  }
-}
-
-@media (min-width: 640px) {
-  .bar {
-    width: 300px;
-  }
-}
-```
-
-Becomes:
-
-```css
-.foo {
-  width: 10px;
-}
-
-.bar {
-  width: 20px;
-}
-
-@media (min-width: 640px) {
-  .foo {
-    width: 150px;
-  }
-  .bar {
-    width: 300px;
-  }
-}
-
-@media (min-width: 320px) {
-  .bar {
-    width: 200px;
-  }
-}
-```
-
-This breaks cascading order of `.bar`, and `.bar` will be displayed in `200px`
-instead of `300px` even if a viewport wider than `640px`.
-
-I suggest defining a query order at first:
-
-```css
-@media (min-width: 320px) { /*! Wider than 320px */ }
-@media (min-width: 640px) { /*! Wider than 640px */ }
-```
-
-Or sort [`min-width` queries automatically][4].
-
-
-### CSS Applying Order
-
-CSS MQPacker changes order of rulesets. This may breaks CSS applying order.
-
-```css
-@media (min-width: 320px) {
-  .foo {
-    width: 100px;
-  }
-}
-
-@media (min-width: 640px) {
-  .bar {
-    width: 200px;
-  }
-}
-
-@media (min-width: 320px) {
-  .baz {
-    width: 300px;
-  }
-}
-```
-
-Becomes:
-
-```css
-@media (min-width: 320px) {
-  .foo {
-    width: 100px;
-  }
-  .baz {
-    width: 300px;
-  }
-}
-
-@media (min-width: 640px) {
-  .bar {
-    width: 200px;
-  }
-}
-```
-
-Fine. But If a HTML element has `class="bar baz"` and viewport width larger than
-`640px`, that element `width` incorrectly set to `200px` instead of `300px`.
-This cannot be resolved only with CSS. So, be careful!
+See also [PostCSS document][2] for more about this `options`.
 
 
 LICENSE
@@ -329,6 +205,4 @@ MIT: http://hail2u.mit-license.org/2014
 
 
 [1]: https://github.com/postcss/postcss
-[2]: #the-first-win-algorithm
-[3]: https://github.com/postcss/postcss#source-map
-[4]: #sort
+[2]: https://github.com/postcss/postcss#source-map
