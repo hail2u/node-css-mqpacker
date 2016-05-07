@@ -4,7 +4,7 @@
   "version": "5.0.0",
   "author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
   "bin": {
-    "mqpacker": "./bin/mqpacker"
+    "mqpacker": "./bin/mqpacker.js"
   },
   "bugs": {
     "url": "https://github.com/hail2u/node-css-mqpacker/issues"
