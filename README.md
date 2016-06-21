@@ -1,9 +1,7 @@
 CSS MQPacker
 ============
 
-Pack same CSS media query rules into one media query rule.
-
-Written with [PostCSS][1].
+Pack same CSS media query rules into one using PostCSS
 
 
 SYNOPSIS
@@ -178,8 +176,8 @@ Packs media queries in `css`.
 
 The second argument is optional. The `options` are:
 
-- [options][2] mentioned above
-- the second argument of [PostCSS’s `process()` method][3]
+- [options][1] mentioned above
+- the second argument of [PostCSS’s `process()` method][2]
 
 You can specify both at the same time.
 
@@ -207,6 +205,5 @@ LICENSE
 MIT: http://hail2u.mit-license.org/2014
 
 
-[1]: https://github.com/postcss/postcss
-[2]: #options
-[3]: https://github.com/postcss/postcss#source-map
+[1]: #options
+[2]: https://github.com/postcss/postcss#source-map
