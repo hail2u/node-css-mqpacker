@@ -176,8 +176,12 @@ API
 
 Packs media queries in `css`.
 
-The second argument is optional. The `options` is same as the second argument of
-PostCSS’s `process()` method. This is useful for generating Source Map.
+The second argument is optional. The `options` are:
+
+- [options][2] mentioned above
+- the second argument of [PostCSS’s `process()` method][3]
+
+You can specify both at the same time.
 
 ```javascript
 var fs = require("fs");
@@ -189,13 +193,12 @@ var result = mqpacker.pack(css, {
   map: {
     inline: false
   },
+  sort: true,
   to: "to.css"
 });
 fs.writeFileSync("to.css", result.css);
 fs.writeFileSync("to.css.map", result.map);
 ```
-
-See also [PostCSS document][2] for more about this `options`.
 
 
 LICENSE
@@ -205,4 +208,5 @@ MIT: http://hail2u.mit-license.org/2014
 
 
 [1]: https://github.com/postcss/postcss
-[2]: https://github.com/postcss/postcss#source-map
+[2]: #options
+[3]: https://github.com/postcss/postcss#source-map
