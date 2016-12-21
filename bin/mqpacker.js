@@ -42,6 +42,10 @@ function showHelp() {
   console.log("  -v, --version    Print version information.");
   console.log("");
   console.log("Use a single dash for INPUT to read CSS from standard input.");
+  console.log("");
+  console.log("Examples:");
+  console.log(`  $ ${binname} fragmented.css`);
+  console.log(`  $ ${binname} fragmented.css > packed.css`);
 
   return;
 }
