@@ -2,56 +2,12 @@
 
 "use strict";
 
-var mqpacker = require("../index");
-var fs = require("fs");
-var minimist = require("minimist");
-var pkg = require("../package.json");
+const mqpacker = require("../index");
+const fs = require("fs");
+const minimist = require("minimist");
+const pkg = require("../package.json");
 
-var binname = Object.keys(pkg.bin)[0];
-var showHelp = function () {
-  console.log("Usage: " + binname + " [options] INPUT [OUTPUT]");
-  console.log("");
-  console.log("Description:");
-  console.log("  " + pkg.description);
-  console.log("");
-  console.log("Options:");
-  console.log("  -s, --sort       Sort `min-width` queries.");
-  console.log("      --sourcemap  Create source map file.");
-  console.log("  -h, --help       Show this message.");
-  console.log("  -v, --version    Print version information.");
-  console.log("");
-  console.log("Use a single dash for INPUT to read CSS from standard input.");
-
-  return;
-};
-var pack = function (s, o) {
-  mqpacker.pack(s, o).then(function (result) {
-    if (!o.to) {
-      process.stdout.write(result.css);
-
-      return;
-    }
-
-    fs.writeFileSync(o.to, result.css);
-
-    if (result.map) {
-      fs.writeFileSync(o.to + ".map", result.map);
-    }
-  }).catch(function (error) {
-    if (error.name === "CssSyntaxError") {
-      console.error([
-        error.file,
-        error.line,
-        error.column,
-        " " + error.reason
-      ].join(":"));
-      process.exit(1);
-    }
-
-    throw error;
-  });
-};
-var argv = minimist(process.argv.slice(2), {
+const argv = minimist(process.argv.slice(2), {
   boolean: [
     "help",
     "sort",
@@ -70,6 +26,50 @@ var argv = minimist(process.argv.slice(2), {
     "version": false
   }
 });
+const binname = Object.keys(pkg.bin)[0];
+const options = {};
+
+function showHelp() {
+  console.log(`Usage: ${binname} [options] INPUT [OUTPUT]`);
+  console.log("");
+  console.log("Description:");
+  console.log(`  ${pkg.description}`);
+  console.log("");
+  console.log("Options:");
+  console.log("  -s, --sort       Sort `min-width` queries.");
+  console.log("      --sourcemap  Create source map file.");
+  console.log("  -h, --help       Show this message.");
+  console.log("  -v, --version    Print version information.");
+  console.log("");
+  console.log("Use a single dash for INPUT to read CSS from standard input.");
+
+  return;
+}
+
+function pack(s, o) {
+  mqpacker.pack(s, o).then(function (result) {
+    if (!o.to) {
+      process.stdout.write(result.css);
+
+      return;
+    }
+
+    fs.writeFileSync(o.to, result.css);
+
+    if (result.map) {
+      fs.writeFileSync(`${o.to}.map`, result.map);
+    }
+  }).catch(function (error) {
+    if (error.name === "CssSyntaxError") {
+      console.error(
+        `${error.file}:${error.line}:${error.column}: ${error.reason}`
+      );
+      process.exit(1);
+    }
+
+    throw error;
+  });
+}
 
 if (argv._.length < 1) {
   argv.help = true;
@@ -77,7 +77,7 @@ if (argv._.length < 1) {
 
 switch (true) {
 case argv.version:
-  console.log(binname + " v" + pkg.version);
+  console.log(`${binname} v${pkg.version}`);
 
   break;
 
@@ -87,9 +87,6 @@ case argv.help:
   break;
 
 default:
-  var css = "";
-  var options = {};
-
   if (argv.sort) {
     options.sort = true;
   }
@@ -115,6 +112,5 @@ default:
     argv._[0] = process.stdin.fd;
   }
 
-  css = fs.readFileSync(argv._[0], "utf8");
-  pack(css, options);
+  pack(fs.readFileSync(argv._[0], "utf8"), options);
 }

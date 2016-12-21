@@ -1,10 +1,10 @@
 "use strict";
 
-var list = require("postcss/lib/list");
-var pkg = require("./package.json");
-var postcss = require("postcss");
+const list = require("postcss/lib/list");
+const pkg = require("./package.json");
+const postcss = require("postcss");
 
-var isSourceMapAnnotation = function (rule) {
+function isSourceMapAnnotation(rule) {
   if (!rule) {
     return false;
   }
@@ -18,15 +18,18 @@ var isSourceMapAnnotation = function (rule) {
   }
 
   return true;
-};
+}
 
-var parseQueryList = function (queryList) {
-  var queries = [];
+function parseQueryList(queryList) {
+  const queries = [];
+
   list.comma(queryList).forEach(function (query) {
-    var expressions = {};
+    const expressions = {};
+
     list.space(query).forEach(function (expression) {
-      var feature;
-      var value;
+      let feature;
+      let value;
+
       expression = expression.toLowerCase();
 
       if (expression === "and") {
@@ -53,11 +56,12 @@ var parseQueryList = function (queryList) {
   });
 
   return queries;
-};
+}
 
-var inspectLength = function (length) {
-  var num;
-  var unit;
+function inspectLength(length) {
+  let num;
+  let unit;
+
   length = /(-?\d*\.?\d+)(ch|em|ex|px|rem)/.exec(length);
 
   if (!length) {
@@ -91,12 +95,13 @@ var inspectLength = function (length) {
   }
 
   return num;
-};
+}
 
-var pickMinimumMinWidth = function (expressions) {
-  var minWidths = [];
+function pickMinimumMinWidth(expressions) {
+  const minWidths = [];
+
   expressions.forEach(function (feature) {
-    var minWidth = feature["min-width"];
+    let minWidth = feature["min-width"];
 
     if (!minWidth || feature.not || feature.print) {
       minWidth = [null];
@@ -110,10 +115,10 @@ var pickMinimumMinWidth = function (expressions) {
   return minWidths.sort(function (a, b) {
     return a - b;
   })[0];
-};
+}
 
-var sortQueryLists = function (queryLists, sort) {
-  var mapQueryLists = [];
+function sortQueryLists(queryLists, sort) {
+  const mapQueryLists = [];
 
   if (!sort) {
     return queryLists;
@@ -137,7 +142,7 @@ var sortQueryLists = function (queryLists, sort) {
   }).map(function (e) {
     return queryLists[e.index];
   });
-};
+}
 
 module.exports = postcss.plugin(pkg.name, function (opts) {
   if (!opts) {
@@ -149,17 +154,19 @@ module.exports = postcss.plugin(pkg.name, function (opts) {
   }
 
   return function (css) {
-    var queries = {};
-    var queryLists = [];
-    var sourceMap = css.last;
+    const queries = {};
+    const queryLists = [];
+
+    let sourceMap = css.last;
 
     if (!isSourceMapAnnotation(sourceMap)) {
       sourceMap = null;
     }
 
     css.walkAtRules("media", function (atRule) {
-      var past;
-      var queryList = atRule.params;
+      let past;
+      const queryList = atRule.params;
+
       past = queries[queryList];
 
       if (typeof past === "object") {
