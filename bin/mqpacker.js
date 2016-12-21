@@ -30,22 +30,22 @@ const binname = Object.keys(pkg.bin)[0];
 const options = {};
 
 function showHelp() {
-  console.log(`Usage: ${binname} [options] INPUT [OUTPUT]`);
-  console.log("");
-  console.log("Description:");
-  console.log(`  ${pkg.description}`);
-  console.log("");
-  console.log("Options:");
-  console.log("  -s, --sort       Sort `min-width` queries.");
-  console.log("      --sourcemap  Create source map file.");
-  console.log("  -h, --help       Show this message.");
-  console.log("  -v, --version    Print version information.");
-  console.log("");
-  console.log("Use a single dash for INPUT to read CSS from standard input.");
-  console.log("");
-  console.log("Examples:");
-  console.log(`  $ ${binname} fragmented.css`);
-  console.log(`  $ ${binname} fragmented.css > packed.css`);
+  console.log(`Usage: ${binname} [options] INPUT [OUTPUT]
+
+Description:
+  ${pkg.description}
+
+Options:
+  -s, --sort       Sort “min-width” queries.
+      --sourcemap  Create source map file.
+  -h, --help       Show this message.
+  -v, --version    Print version information.
+
+Use a single dash for INPUT to read CSS from standard input.
+
+Examples:
+  $ ${binname} fragmented.css
+  $ ${binname} fragmented.css > packed.css`);
 
   return;
 }
