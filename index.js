@@ -27,9 +27,6 @@ function parseQueryList(queryList) {
     const expressions = {};
 
     list.space(query).forEach(function (expression) {
-      let feature;
-      let value;
-
       expression = expression.toLowerCase();
 
       if (expression === "and") {
@@ -43,8 +40,8 @@ function parseQueryList(queryList) {
       }
 
       expression = list.split(expression.replace(/^\(|\)$/g, ""), [":"]);
-      feature = expression[0];
-      value = expression[1];
+      const feature = expression[0];
+      const value = expression[1];
 
       if (!expressions[feature]) {
         expressions[feature] = [];
@@ -59,17 +56,14 @@ function parseQueryList(queryList) {
 }
 
 function inspectLength(length) {
-  let num;
-  let unit;
-
   length = /(-?\d*\.?\d+)(ch|em|ex|px|rem)/.exec(length);
 
   if (!length) {
     return Number.MAX_VALUE;
   }
 
-  num = length[1];
-  unit = length[2];
+  let num = length[1];
+  const unit = length[2];
 
   switch (unit) {
   case "ch":
@@ -137,11 +131,13 @@ function sortQueryLists(queryLists, sort) {
       index: i,
       value: pickMinimumMinWidth(e)
     };
-  }).sort(function (a, b) {
-    return a.value - b.value;
-  }).map(function (e) {
-    return queryLists[e.index];
-  });
+  })
+    .sort(function (a, b) {
+      return a.value - b.value;
+    })
+    .map(function (e) {
+      return queryLists[e.index];
+    });
 }
 
 module.exports = postcss.plugin(pkg.name, function (opts) {
@@ -164,10 +160,8 @@ module.exports = postcss.plugin(pkg.name, function (opts) {
     }
 
     css.walkAtRules("media", function (atRule) {
-      let past;
       const queryList = atRule.params;
-
-      past = queries[queryList];
+      const past = queries[queryList];
 
       if (typeof past === "object") {
         atRule.each(function (rule) {
