@@ -115,15 +115,19 @@ This package also installs a command line interface.
     Usage: mqpacker [options] INPUT [OUTPUT]
     
     Description:
-      Pack same CSS media query rules into one media query rule.
+      Pack same CSS media query rules into one using PostCSS
     
     Options:
-      -s, --sort       Sort `min-width` queries.
+      -s, --sort       Sort “min-width” queries.
           --sourcemap  Create source map file.
       -h, --help       Show this message.
-      -v, --version    Print version information.
+          --version    Print version information.
     
     Use a single dash for INPUT to read CSS from standard input.
+    
+    Examples:
+      $ mqpacker fragmented.css
+      $ mqpacker fragmented.css > packed.css
 
 When PostCSS failed to parse INPUT, CLI shows a CSS parse error in GNU error
 format instead of Node.js stack trace.
