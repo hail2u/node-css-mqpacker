@@ -16,8 +16,7 @@ const argv = minimist(process.argv.slice(2), {
   ],
   alias: {
     "h": "help",
-    "s": "sort",
-    "v": "version"
+    "s": "sort"
   },
   default: {
     "help": false,
@@ -39,7 +38,7 @@ Options:
   -s, --sort       Sort “min-width” queries.
       --sourcemap  Create source map file.
   -h, --help       Show this message.
-  -v, --version    Print version information.
+      --version    Print version information.
 
 Use a single dash for INPUT to read CSS from standard input.
 
