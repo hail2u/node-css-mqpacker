@@ -284,9 +284,10 @@ I suggest defining a query order on top of your CSS:
 If you use only simple `min-width` queries, [the `sort` option][4] can help.
 
 
-### CSS Applying Order
+### Multiple Classes
 
-CSS MQPacker changes order of rulesets. This may break CSS applying order.
+CSS MQPacker works only with CSS. This may break CSS applying order to an
+elements that have multiple classes.
 
 ```css
 @media (min-width: 320px) {
@@ -327,9 +328,10 @@ Becomes:
 }
 ```
 
-This looks good, but if an HTML element has `class="bar baz"` and viewport width
-larger than `640px`, that element `width` incorrectly set to `200px` instead of
-`300px`. This problem cannot be resolved only with CSS. So, be careful!
+The result looks good. However, if an HTML element has `class="bar baz"` and
+viewport width larger than `640px`, that element `width` incorrectly set to
+`200px` instead of `300px`. This problem cannot be resolved only with CSS, so be
+careful!
 
 
 LICENSE
