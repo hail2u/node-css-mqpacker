@@ -140,8 +140,9 @@ OPTIONS
 
 ### sort
 
-By default, CSS MQPacker pack and order media queries as they are defined. If
-you want to sort queries automatically, pass `sort: true` to this module.
+By default, CSS MQPacker pack and order media queries as they are defined. See
+also [The "First Win" Algorithm][1]. If you want to sort queries automatically,
+pass `sort: true` to this module.
 
 ```javascript
 postcss([
@@ -180,8 +181,8 @@ Packs media queries in `css`.
 
 The second argument is optional. The `options` are:
 
-- [options][1] mentioned above
-- the second argument of [PostCSS’s `process()` method][2]
+- [options][2] mentioned above
+- the second argument of [PostCSS’s `process()` method][3]
 
 You can specify both at the same time.
 
@@ -203,11 +204,141 @@ fs.writeFileSync("to.css.map", result.map);
 ```
 
 
+NOTES
+-----
+
+With CSS MQPacker, the processed CSS is always valid CSS, but you and your
+website user will get unexpected results. This section explains how CSS MQPacker
+works and what you should keep in mind.
+
+
+### The "First Win" Algorithm
+
+CSS MQPacker is implemented with the "first win" algorithm. This means:
+
+```css
+.foo {
+  width: 10px;
+}
+
+@media (min-width: 640px) {
+  .foo {
+    width: 150px;
+  }
+}
+
+.bar {
+  width: 20px;
+}
+
+@media (min-width: 320px) {
+  .bar {
+    width: 200px;
+  }
+}
+
+@media (min-width: 640px) {
+  .bar {
+    width: 300px;
+  }
+}
+```
+
+Becomes:
+
+```css
+.foo {
+  width: 10px;
+}
+
+.bar {
+  width: 20px;
+}
+
+@media (min-width: 640px) {
+  .foo {
+    width: 150px;
+  }
+  .bar {
+    width: 300px;
+  }
+}
+
+@media (min-width: 320px) {
+  .bar {
+    width: 200px;
+  }
+}
+```
+
+This breaks cascading order of `.bar`, and `.bar` will be displayed in `200px`
+instead of `300px` even if a viewport wider than `640px`.
+
+I suggest defining a query order on top of your CSS:
+
+```css
+@media (min-width: 320px) { /*! Wider than 320px */ }
+@media (min-width: 640px) { /*! Wider than 640px */ }
+```
+
+If you use only simple `min-width` queries, [the `sort` option][4] can help.
+
+
+### CSS Applying Order
+
+CSS MQPacker changes order of rulesets. This may break CSS applying order.
+
+```css
+@media (min-width: 320px) {
+  .foo {
+    width: 100px;
+  }
+}
+
+@media (min-width: 640px) {
+  .bar {
+    width: 200px;
+  }
+}
+
+@media (min-width: 320px) {
+  .baz {
+    width: 300px;
+  }
+}
+```
+
+Becomes:
+
+```css
+@media (min-width: 320px) {
+  .foo {
+    width: 100px;
+  }
+  .baz {
+    width: 300px;
+  }
+}
+
+@media (min-width: 640px) {
+  .bar {
+    width: 200px;
+  }
+}
+```
+
+This looks good, but if an HTML element has `class="bar baz"` and viewport width
+larger than `640px`, that element `width` incorrectly set to `200px` instead of
+`300px`. This problem cannot be resolved only with CSS. So, be careful!
+
+
 LICENSE
 -------
 
 MIT: http://hail2u.mit-license.org/2014
 
 
-[1]: #options
-[2]: https://github.com/postcss/postcss#source-map
+[1]: #the-first-win-algorithm
+[2]: #options
+[3]: http://api.postcss.org/global.html#processOptions
+[4]: #sort
