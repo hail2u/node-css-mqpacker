@@ -212,6 +212,47 @@ website user will get unexpected results. This section explains how CSS MQPacker
 works and what you should keep in mind.
 
 
+### CSS Cascading Order
+
+CSS MQPacker changes rulesets’ order. This means the processed CSS will have an
+unexpected cascading order. For example:
+
+```css
+@media (min-width: 640px) {
+  .foo {
+    width: 300px;
+  }
+}
+
+.foo {
+  width: 400px;
+}
+```
+
+Becomes:
+
+```css
+.foo {
+  width: 400px;
+}
+
+@media (min-width: 640px) {
+  .foo {
+    width: 300px;
+  }
+}
+```
+
+`.foo` is always `400px` in original CSS, but `300px` if viewport is wider than
+`640px' with processed CSS.
+
+This does not occur on small project. On large project, however, this could
+occur frequently. For example, if you want to override a CSS framework (like
+Bootstrap) component declaration, your whole CSS code will be something similar
+to above example. To avoid this problem, you should pack only CSS you write, and
+then concaenate with a CSS framework.
+
+
 ### The "First Win" Algorithm
 
 CSS MQPacker is implemented with the "first win" algorithm. This means:
