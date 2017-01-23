@@ -7,48 +7,47 @@ Pack same CSS media query rules into one using PostCSS
 SYNOPSIS
 --------
 
-A CSS file processed with a CSS pre-processor may have same queries that can
-merge:
+A well componentized CSS file may have same media queries that can merge:
 
 ```css
-.foo::before {
-  content: "foo on small";
+.foo {
+  width: 240px;
 }
 
-@media screen and (min-width: 769px) {
-  .foo::before {
-    content: "foo on medium";
+@media screen and (min-width: 768px) {
+  .foo {
+    width: 576px;
   }
 }
 
-.bar::before {
-  content: "bar on small";
+.bar {
+  width: 160px;
 }
 
-@media screen and (min-width: 769px) {
-  .bar::before {
-    content: "bar on medium";
+@media screen and (min-width: 768px) {
+  .bar {
+    width: 384px;
   }
 }
 ```
 
-This PostCSS plugin packs exactly same queries (and optionally sorts) like this:
+This PostCSS plugin packs exactly same media queries:
 
 ```css
-.foo::before {
-  content: "foo on small";
+.foo {
+  width: 240px;
 }
 
-.bar::before {
-  content: "bar on small";
+.bar {
+  width: 160px;
 }
 
-@media screen and (min-width: 769px) {
-  .foo::before {
-    content: "foo on medium";
+@media screen and (min-width: 768px) {
+  .foo {
+    width: 576px;
   }
-  .bar::before {
-    content: "bar on medium";
+  .bar {
+    width: 384px;
   }
 }
 ```
@@ -70,40 +69,40 @@ Of course, this package can be used as PostCSS plugin:
 
 "use strict";
 
-var fs = require("fs");
-var postcss = require("postcss");
+const fs = require("fs");
+cosnt postcss = require("postcss");
 
-var css = fs.readFileSync("from.css", "utf8");
 postcss([
   require("autoprefixer-core")(),
   require("css-mqpacker")()
-]).process(css).then(function (result) {
+]).process(fs.readFileSync("from.css", "utf8")).then(function (result) {
   console.log(result.css);
 });
 ```
 
+It is a recommended way to use this tool.
+
 
 ### As standard Node.js package
 
-Read `from.css`, process its content, and output processed CSS to STDOUT.
+This package is also a Node.js module. For exmaple, you can read `from.css`,
+process its content, and output processed CSS to STDOUT:
 
 ```javascript
 #!/usr/bin/env node
 
 "use strict";
 
-var fs = require("fs");
-var mqpacker = require("css-mqpacker");
+const fs = require("fs");
+const mqpacker = require("css-mqpacker");
 
-var original = fs.readFileSync("from.css", "utf8");
-var processed = mqpacker.pack(original, {
+cosole.log(mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
   from: "from.css",
   map: {
     inline: false
   },
   to: "to.css"
-});
-console.log(processed.css);
+}).css);
 ```
 
 
@@ -134,14 +133,17 @@ format instead of Node.js stack trace.
 
 The `--sort` option does not currently support a custom function.
 
+If you install this package in global, CLI will be available somewhere in the
+`$PATH`.
+
 
 OPTIONS
 -------
 
 ### sort
 
-By default, CSS MQPacker pack and order media queries as they are defined. See
-also [The "First Win" Algorithm][1]. If you want to sort queries automatically,
+By default, CSS MQPacker pack and order media queries as they are defined ([the
+“first win” algorithm][1]). If you want to sort media queries automatically,
 pass `sort: true` to this module.
 
 ```javascript
@@ -166,10 +168,10 @@ postcss([
 ]).process(css);
 ```
 
-In this example, all your queries will sort by A-Z order.
+In this example, all your media queries will sort by A-Z order.
 
-This sorting function directly pass to `Array#sort()` method of an array of all
-your queries.
+This sorting function is directly passed to `Array#sort()` method of an array of
+all your media queries.
 
 
 API
@@ -187,11 +189,10 @@ The second argument is optional. The `options` are:
 You can specify both at the same time.
 
 ```javascript
-var fs = require("fs");
-var mqpacker = require("css-mqpacker");
+cosnt fs = require("fs");
+const mqpacker = require("css-mqpacker");
 
-var css = fs.readFileSync("from.css", "utf8");
-var result = mqpacker.pack(css, {
+const result = mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
   from: "from.css",
   map: {
     inline: false
@@ -243,19 +244,19 @@ Becomes:
 }
 ```
 
-`.foo` is always `400px` in original CSS, but `300px` if viewport is wider than
-`640px' with processed CSS.
+`.foo` is always `400px` with original CSS. With processed CSS, however, `.foo`
+is `300px` if viewport is wider than `640px`.
 
-This does not occur on small project. On large project, however, this could
-occur frequently. For example, if you want to override a CSS framework (like
+This does not occur on small project. However, this could occur frequently on
+large project. For example, if you want to override a CSS framework (like
 Bootstrap) component declaration, your whole CSS code will be something similar
 to above example. To avoid this problem, you should pack only CSS you write, and
 then concaenate with a CSS framework.
 
 
-### The "First Win" Algorithm
+### The “First Win” Algorithm
 
-CSS MQPacker is implemented with the "first win" algorithm. This means:
+CSS MQPacker is implemented with the “first win” algorithm. This means:
 
 ```css
 .foo {
@@ -318,17 +319,17 @@ instead of `300px` even if a viewport wider than `640px`.
 I suggest defining a query order on top of your CSS:
 
 ```css
-@media (min-width: 320px) { /*! Wider than 320px */ }
-@media (min-width: 640px) { /*! Wider than 640px */ }
+@media (min-width: 320px) { /* Wider than 320px */ }
+@media (min-width: 640px) { /* Wider than 640px */ }
 ```
 
-If you use only simple `min-width` queries, [the `sort` option][4] can help.
+If you use simple `min-width` queries only, [the `sort` option][4] can help.
 
 
 ### Multiple Classes
 
 CSS MQPacker works only with CSS. This may break CSS applying order to an
-elements that have multiple classes.
+elements that have multiple classes. For example:
 
 ```css
 @media (min-width: 320px) {
