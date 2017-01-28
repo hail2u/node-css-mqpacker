@@ -145,9 +145,9 @@ module.exports = postcss.plugin(pkg.name, function (opts) {
     opts = {};
   }
 
-  if (!opts.sort) {
-    opts.sort = false;
-  }
+  opts = Object.assign({
+    sort: false
+  }, opts);
 
   return function (css) {
     const queries = {};
