@@ -23,10 +23,10 @@ function isSourceMapAnnotation(rule) {
 function parseQueryList(queryList) {
   const queries = [];
 
-  list.comma(queryList).forEach(function (query) {
+  list.comma(queryList).forEach((query) => {
     const expressions = {};
 
-    list.space(query).forEach(function (expression) {
+    list.space(query).forEach((expression) => {
       expression = expression.toLowerCase();
 
       if (expression === "and") {
@@ -94,19 +94,19 @@ function inspectLength(length) {
 function pickMinimumMinWidth(expressions) {
   const minWidths = [];
 
-  expressions.forEach(function (feature) {
+  expressions.forEach((feature) => {
     let minWidth = feature["min-width"];
 
     if (!minWidth || feature.not || feature.print) {
       minWidth = [null];
     }
 
-    minWidths.push(minWidth.map(inspectLength).sort(function (a, b) {
+    minWidths.push(minWidth.map(inspectLength).sort((a, b) => {
       return b - a;
     })[0]);
   });
 
-  return minWidths.sort(function (a, b) {
+  return minWidths.sort((a, b) => {
     return a - b;
   })[0];
 }
@@ -122,25 +122,25 @@ function sortQueryLists(queryLists, sort) {
     return queryLists.sort(sort);
   }
 
-  queryLists.forEach(function (queryList) {
+  queryLists.forEach((queryList) => {
     mapQueryLists.push(parseQueryList(queryList));
   });
 
-  return mapQueryLists.map(function (e, i) {
+  return mapQueryLists.map((e, i) => {
     return {
       index: i,
       value: pickMinimumMinWidth(e)
     };
   })
-    .sort(function (a, b) {
+    .sort((a, b) => {
       return a.value - b.value;
     })
-    .map(function (e) {
+    .map((e) => {
       return queryLists[e.index];
     });
 }
 
-module.exports = postcss.plugin(pkg.name, function (opts) {
+module.exports = postcss.plugin(pkg.name, (opts) => {
   if (!opts) {
     opts = {};
   }
@@ -159,12 +159,12 @@ module.exports = postcss.plugin(pkg.name, function (opts) {
       sourceMap = null;
     }
 
-    css.walkAtRules("media", function (atRule) {
+    css.walkAtRules("media", (atRule) => {
       const queryList = atRule.params;
       const past = queries[queryList];
 
       if (typeof past === "object") {
-        atRule.each(function (rule) {
+        atRule.each((rule) => {
           past.append(rule.clone());
         });
       } else {
@@ -175,7 +175,7 @@ module.exports = postcss.plugin(pkg.name, function (opts) {
       atRule.remove();
     });
 
-    sortQueryLists(queryLists, opts.sort).forEach(function (queryList) {
+    sortQueryLists(queryLists, opts.sort).forEach((queryList) => {
       css.append(queries[queryList]);
     });
 

@@ -51,7 +51,7 @@ Examples:
 
 function pack(s, o) {
   mqpacker.pack(s, o)
-    .then(function (result) {
+    .then((result) => {
       if (!o.to) {
         process.stdout.write(result.css);
 
@@ -64,7 +64,7 @@ function pack(s, o) {
         fs.writeFileSync(`${o.to}.map`, result.map);
       }
     })
-    .catch(function (error) {
+    .catch((error) => {
       if (error.name === "CssSyntaxError") {
         console.error(
           `${error.file}:${error.line}:${error.column}: ${error.reason}`
