@@ -70,7 +70,7 @@ Of course, this package can be used as PostCSS plugin:
 "use strict";
 
 const fs = require("fs");
-cosnt postcss = require("postcss");
+const postcss = require("postcss");
 
 postcss([
   require("autoprefixer-core")(),
@@ -189,7 +189,7 @@ The second argument is optional. The `options` are:
 You can specify both at the same time.
 
 ```javascript
-cosnt fs = require("fs");
+const fs = require("fs");
 const mqpacker = require("css-mqpacker");
 
 const result = mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
