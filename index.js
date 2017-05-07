@@ -180,7 +180,7 @@ module.exports = postcss.plugin(pkg.name, (opts) => {
     });
 
     if (sourceMap) {
-      sourceMap.moveTo(css);
+      css.append(sourceMap);
     }
 
     return css;
