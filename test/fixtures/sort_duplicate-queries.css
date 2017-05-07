@@ -1,3 +1,7 @@
+.foo {
+  z-index: 0;
+}
+
 @media (min-width: 1em) and (min-width: 6em) {
   .foo {
     z-index: 3;

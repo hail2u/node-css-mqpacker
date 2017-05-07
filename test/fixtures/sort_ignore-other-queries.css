@@ -1,3 +1,7 @@
+.foo {
+  z-index: 0;
+}
+
 @media screen and (min-width: 2em) {
   .foo {
     z-index: 2;
