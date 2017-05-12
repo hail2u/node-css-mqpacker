@@ -150,39 +150,109 @@ module.exports = postcss.plugin(pkg.name, (opts) => {
   }, opts);
 
   return function (css) {
-    const queries = {};
-    const queryLists = [];
 
+    // get source-map annotation
     let sourceMap = css.last;
 
     if (!isSourceMapAnnotation(sourceMap)) {
       sourceMap = null;
     }
 
-    css.walkAtRules("media", (atRule) => {
-      const queryList = atRule.params;
-      const past = queries[queryList];
+    const groups = {};
+    let _groupId = 0;
 
+    // give root node an mqpacker group id
+    css._mqpackerGroupId = _groupId;
+
+    // find '@media' rules
+    css.walkAtRules('media', (atRule) => {
+
+      // get '@media' rule's group
+      let _searchForGroup = true,
+        parent = atRule.parent,
+        // default to root group
+        group = {
+          id: 0,
+          type: 'root',
+          node: css
+        };
+
+      // search for '@mqpack' rule in ancestors
+      while (_searchForGroup && parent)
+      {
+        // if '@media' rule is nested in a '@mqpack' rule
+        if (parent.type == 'atrule' && parent.name == 'mqpack') {
+          // set/get parent's mqpacker group id
+          parent._mqpackerGroupId = parent._mqpackerGroupId || ++_groupId;
+          // set the '@media' group attributes to represent th '@mqpack' node
+          group = {
+            id: parent._mqpackerGroupId,
+            node: parent,
+            type: 'mqpack'
+          };
+
+          _searchForGroup == false;
+        }
+
+        // check next ancestor
+        parent = parent.parent;
+      }
+
+      // register new '@media' query groups
+      if (!groups.hasOwnProperty(group.id)) {
+        group.queries = {};
+        group.queryLists = [];
+        groups[group.id] = group;
+      }
+
+      const queryList = atRule.params;
+      const past = groups[group.id].queries[queryList];
+
+      // if another '@media' with same params was already found
       if (typeof past === "object") {
+        // add rules from this '@media' to the one found before
         atRule.each((rule) => {
           past.append(rule.clone());
         });
       } else {
-        queries[queryList] = atRule.clone();
-        queryLists.push(queryList);
+        // clone current '@media' and register for further processing
+        groups[group.id].queries[queryList] = atRule.clone();
+        groups[group.id].queryLists.push(queryList);
       }
 
+      // remove '@media' node
       atRule.remove();
+
     });
 
-    sortQueryLists(queryLists, opts.sort).forEach((queryList) => {
-      css.append(queries[queryList]);
-    });
+    // re-inject '@media' nodes in-place
+    for (var groupId in groups)
+    {
+      let group = groups[groupId];      
 
+      // sort collected '@media' nodes in group
+      sortQueryLists(group.queryLists, opts.sort).forEach((queryList) => {
+        // and add them at the end of the group's node
+        group.node.append(group.queries[queryList]);
+      });
+
+      // replace '@mqpack' nodes with their contents
+      if (group.type == 'mqpack')
+      {
+        group.node.each((rule) => {
+          rule.moveBefore(group.node);
+        });
+
+        group.node.remove();
+      }
+    };
+
+    // move source-map annotation to the end
     if (sourceMap) {
       css.append(sourceMap);
     }
 
+    // return resulting css tree
     return css;
   };
 });
