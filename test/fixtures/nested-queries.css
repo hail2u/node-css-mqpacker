@@ -4,7 +4,7 @@
 
 @media (min-width: 1024px) {
   .foo {
-    z-index: 4;
+    z-index: 3;
   }
 }
 
@@ -15,7 +15,13 @@
 
   @media (min-width: 1024px) {
     .foo {
-      z-index: 3;
+      z-index: 4;
     }
+  }
+}
+
+@media (min-width: 1024px) {
+  .bar {
+    z-index: 5;
   }
 }
