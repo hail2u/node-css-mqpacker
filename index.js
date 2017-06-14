@@ -160,8 +160,24 @@ module.exports = postcss.plugin(pkg.name, (opts) => {
     }
 
     css.walkAtRules("media", (atRule) => {
-      if (atRule.parent.type !== "root") {
+      if (atRule.parent.parent && atRule.parent.parent.type !== "root") {
         return;
+      }
+
+      if (atRule.parent.type !== "root") {
+        const newAtRule = postcss.atRule({
+          name: atRule.parent.name,
+          params: atRule.parent.params
+        });
+
+        atRule.each((rule) => {
+          newAtRule.append(rule);
+        });
+        atRule.remove();
+        atRule = postcss.atRule({
+          name: atRule.name,
+          params: atRule.params
+        }).append(newAtRule);
       }
 
       const queryList = atRule.params;

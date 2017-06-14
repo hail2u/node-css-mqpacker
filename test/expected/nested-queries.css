@@ -6,16 +6,18 @@
   .foo {
     z-index: 2;
   }
-
-  @media (min-width: 1024px) {
-    .foo {
-      z-index: 3;
-    }
-  }
 }
 
 @media (min-width: 1024px) {
   .foo {
-    z-index: 4;
+    z-index: 3;
+  }
+  @supports (display: auto) {
+    .foo {
+      z-index: 4;
+    }
+  }
+  .bar {
+    z-index: 5;
   }
 }
