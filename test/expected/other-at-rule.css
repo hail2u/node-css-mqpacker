@@ -2,12 +2,50 @@
 
 @import "import.css";
 
+@page {
+  margin: 1.5cm 2cm 1.5cm 2.5cm;
+}
+
+@page :first {
+  margin-top: 10cm;
+}
+
+@page {
+  color: red;
+  @top-left {
+    content: "foo";
+    color: blue;
+  }
+  @top-right {
+    content: "bar";
+  }
+  @top-left-corner {
+    content: " ";
+    border: solid green;
+  }
+  @top-right-corner {
+    content: url(foo.png);
+    border: solid green;
+  }
+  @bottom-right-corner {
+    content: counter(page);
+    border: solid green;
+  }
+  @bottom-left-corner {
+    content: normal;
+    border: solid green;
+  }
+}
+
 @font-face {
   font-family: F;
   src: local("F");
 }
 
 @media (min-width: 99px) {
+  @page {
+    margin: 5cm;
+  }
   .foo {
     z-index: 1;
   }
