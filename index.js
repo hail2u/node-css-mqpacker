@@ -23,10 +23,10 @@ function isSourceMapAnnotation(rule) {
 function parseQueryList(queryList) {
   const queries = [];
 
-  list.comma(queryList).forEach((query) => {
+  list.comma(queryList).forEach(query => {
     const expressions = {};
 
-    list.space(query).forEach((expression) => {
+    list.space(query).forEach(expression => {
       expression = expression.toLowerCase();
 
       if (expression === "and") {
@@ -70,26 +70,26 @@ function inspectLength(length) {
   const unit = length[2];
 
   switch (unit) {
-  case "ch":
-    num = parseFloat(num) * 8.8984375;
+    case "ch":
+      num = parseFloat(num) * 8.8984375;
 
-    break;
+      break;
 
-  case "em":
-  case "rem":
-    num = parseFloat(num) * 16;
+    case "em":
+    case "rem":
+      num = parseFloat(num) * 16;
 
-    break;
+      break;
 
-  case "ex":
-    num = parseFloat(num) * 8.296875;
+    case "ex":
+      num = parseFloat(num) * 8.296875;
 
-    break;
+      break;
 
-  case "px":
-    num = parseFloat(num);
+    case "px":
+      num = parseFloat(num);
 
-    break;
+      break;
   }
 
   return num;
@@ -98,16 +98,18 @@ function inspectLength(length) {
 function pickMinimumMinWidth(expressions) {
   const minWidths = [];
 
-  expressions.forEach((feature) => {
+  expressions.forEach(feature => {
     let minWidth = feature["min-width"];
 
     if (!minWidth || feature.not || feature.print) {
       minWidth = [null];
     }
 
-    minWidths.push(minWidth.map(inspectLength).sort((a, b) => {
-      return b - a;
-    })[0]);
+    minWidths.push(
+      minWidth.map(inspectLength).sort((a, b) => {
+        return b - a;
+      })[0]
+    );
   });
 
   return minWidths.sort((a, b) => {
@@ -126,34 +128,38 @@ function sortQueryLists(queryLists, sort) {
     return queryLists.sort(sort);
   }
 
-  queryLists.forEach((queryList) => {
+  queryLists.forEach(queryList => {
     mapQueryLists.push(parseQueryList(queryList));
   });
 
-  return mapQueryLists.map((e, i) => {
-    return {
-      index: i,
-      value: pickMinimumMinWidth(e)
-    };
-  })
+  return mapQueryLists
+    .map((e, i) => {
+      return {
+        index: i,
+        value: pickMinimumMinWidth(e)
+      };
+    })
     .sort((a, b) => {
       return a.value - b.value;
     })
-    .map((e) => {
+    .map(e => {
       return queryLists[e.index];
     });
 }
 
-module.exports = postcss.plugin(pkg.name, (opts) => {
+module.exports = postcss.plugin(pkg.name, opts => {
   if (!opts) {
     opts = {};
   }
 
-  opts = Object.assign({
-    sort: false
-  }, opts);
+  opts = Object.assign(
+    {
+      sort: false
+    },
+    opts
+  );
 
-  return function (css) {
+  return function(css) {
     const queries = {};
     const queryLists = [];
 
@@ -163,7 +169,7 @@ module.exports = postcss.plugin(pkg.name, (opts) => {
       sourceMap = null;
     }
 
-    css.walkAtRules("media", (atRule) => {
+    css.walkAtRules("media", atRule => {
       if (atRule.parent.parent && atRule.parent.parent.type !== "root") {
         return;
       }
@@ -174,21 +180,23 @@ module.exports = postcss.plugin(pkg.name, (opts) => {
           params: atRule.parent.params
         });
 
-        atRule.each((rule) => {
+        atRule.each(rule => {
           newAtRule.append(rule);
         });
         atRule.remove();
-        atRule = postcss.atRule({
-          name: atRule.name,
-          params: atRule.params
-        }).append(newAtRule);
+        atRule = postcss
+          .atRule({
+            name: atRule.name,
+            params: atRule.params
+          })
+          .append(newAtRule);
       }
 
       const queryList = atRule.params;
       const past = queries[queryList];
 
       if (typeof past === "object") {
-        atRule.each((rule) => {
+        atRule.each(rule => {
           past.append(rule.clone());
         });
       } else {
@@ -199,7 +207,7 @@ module.exports = postcss.plugin(pkg.name, (opts) => {
       atRule.remove();
     });
 
-    sortQueryLists(queryLists, opts.sort).forEach((queryList) => {
+    sortQueryLists(queryLists, opts.sort).forEach(queryList => {
       css.append(queries[queryList]);
     });
 
@@ -211,8 +219,6 @@ module.exports = postcss.plugin(pkg.name, (opts) => {
   };
 });
 
-module.exports.pack = function (css, opts) {
-  return postcss([
-    this(opts)
-  ]).process(css, opts);
+module.exports.pack = function(css, opts) {
+  return postcss([this(opts)]).process(css, opts);
 };

@@ -6,7 +6,7 @@ const postcss = require("postcss");
 
 const mqpacker = require("../index");
 
-exports["Public API"] = (test) => {
+exports["Public API"] = test => {
   const input = `.foo {
   z-index: 0;
 }
@@ -20,18 +20,12 @@ exports["Public API"] = (test) => {
   const expected = postcss().process(input).css;
 
   test.expect(2);
-  test.strictEqual(
-    postcss([mqpacker()]).process(input).css,
-    expected
-  );
-  test.strictEqual(
-    mqpacker.pack(input).css,
-    expected
-  );
+  test.strictEqual(postcss([mqpacker()]).process(input).css, expected);
+  test.strictEqual(mqpacker.pack(input).css, expected);
   test.done();
 };
 
-exports["Option: PostCSS options"] = (test) => {
+exports["Option: PostCSS options"] = test => {
   const input = `.foo {
   z-index: 0;
 }
@@ -54,18 +48,12 @@ exports["Option: PostCSS options"] = (test) => {
   const processed = mqpacker.pack(input, opts);
 
   test.expect(2);
-  test.strictEqual(
-    processed.css,
-    expected.css
-  );
-  test.deepEqual(
-    processed.map,
-    expected.map
-  );
+  test.strictEqual(processed.css, expected.css);
+  test.deepEqual(processed.map, expected.map);
   test.done();
 };
 
-exports["Option: sort"] = (test) => {
+exports["Option: sort"] = test => {
   const expected = `.foo {
   z-index: 0;
 }
@@ -103,21 +91,15 @@ exports["Option: sort"] = (test) => {
   };
 
   test.expect(4);
-  test.notStrictEqual(
-    mqpacker.pack(input).css,
-    expected
-  );
-  test.strictEqual(
-    mqpacker.pack(input, opts).css,
-    expected
-  );
+  test.notStrictEqual(mqpacker.pack(input).css, expected);
+  test.strictEqual(mqpacker.pack(input, opts).css, expected);
   test.notStrictEqual(
     postcss([mqpacker()]).process(input).css,
     postcss([mqpacker(opts)]).process(input).css
   );
   test.strictEqual(
     mqpacker.pack(input, {
-      sort: function (c, d) {
+      sort: function(c, d) {
         return c.localeCompare(d);
       }
     }).css,
@@ -126,21 +108,21 @@ exports["Option: sort"] = (test) => {
   test.done();
 };
 
-exports["Real CSS"] = (test) => {
+exports["Real CSS"] = test => {
   const testCases = fs.readdirSync(path.join(__dirname, "fixtures"));
-  const loadExpected = (file) => {
+  const loadExpected = file => {
     file = path.join(__dirname, "expected", file);
 
     return fs.readFileSync(file, "utf8");
   };
-  const loadInput = (file) => {
+  const loadInput = file => {
     file = path.join(__dirname, "fixtures", file);
 
     return fs.readFileSync(file, "utf8");
   };
 
   test.expect(testCases.length);
-  testCases.forEach((testCase) => {
+  testCases.forEach(testCase => {
     const opts = {
       sort: false
     };
