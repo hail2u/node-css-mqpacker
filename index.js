@@ -56,6 +56,10 @@ function parseQueryList(queryList) {
 }
 
 function inspectLength(length) {
+  if (length === "0") {
+    return 0;
+  }
+
   length = /(-?\d*\.?\d+)(ch|em|ex|px|rem)/.exec(length);
 
   if (!length) {
