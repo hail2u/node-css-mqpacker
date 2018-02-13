@@ -1,9 +1,6 @@
-"use strict";
-
 const fs = require("fs");
 const path = require("path");
 const postcss = require("postcss");
-
 const mqpacker = require("../index");
 
 exports["Public API"] = test => {
@@ -18,7 +15,6 @@ exports["Public API"] = test => {
 }
 `;
   const expected = postcss().process(input).css;
-
   test.expect(2);
   test.strictEqual(postcss([mqpacker()]).process(input).css, expected);
   test.strictEqual(mqpacker.pack(input).css, expected);
@@ -46,7 +42,6 @@ exports["Option: PostCSS options"] = test => {
   };
   const expected = postcss().process(input, opts);
   const processed = mqpacker.pack(input, opts);
-
   test.expect(2);
   test.strictEqual(processed.css, expected.css);
   test.deepEqual(processed.map, expected.map);
@@ -89,7 +84,6 @@ exports["Option: sort"] = test => {
   const opts = {
     sort: true
   };
-
   test.expect(4);
   test.notStrictEqual(mqpacker.pack(input).css, expected);
   test.strictEqual(mqpacker.pack(input, opts).css, expected);
@@ -99,9 +93,7 @@ exports["Option: sort"] = test => {
   );
   test.strictEqual(
     mqpacker.pack(input, {
-      sort: function(c, d) {
-        return c.localeCompare(d);
-      }
+      sort: (c, d) => c.localeCompare(d)
     }).css,
     expected
   );
@@ -110,17 +102,10 @@ exports["Option: sort"] = test => {
 
 exports["Real CSS"] = test => {
   const testCases = fs.readdirSync(path.join(__dirname, "fixtures"));
-  const loadExpected = file => {
-    file = path.join(__dirname, "expected", file);
-
-    return fs.readFileSync(file, "utf8");
-  };
-  const loadInput = file => {
-    file = path.join(__dirname, "fixtures", file);
-
-    return fs.readFileSync(file, "utf8");
-  };
-
+  const loadExpected = file =>
+    fs.readFileSync(path.join(__dirname, "expected", file), "utf8");
+  const loadInput = file =>
+    fs.readFileSync(path.join(__dirname, "fixtures", file), "utf8");
   test.expect(testCases.length);
   testCases.forEach(testCase => {
     const opts = {

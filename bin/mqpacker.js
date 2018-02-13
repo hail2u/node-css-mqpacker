@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-"use strict";
-
 const mqpacker = require("../index");
 const fs = require("fs");
 const minimist = require("minimist");
@@ -20,10 +18,10 @@ const argv = minimist(process.argv.slice(2), {
     version: false
   }
 });
-const binname = Object.keys(pkg.bin)[0];
+const [binname] = Object.keys(pkg.bin);
 const options = {};
 
-function showHelp() {
+const showHelp = () => {
   console.log(`Usage: ${binname} [options] INPUT [OUTPUT]
 
 Description:
@@ -40,11 +38,9 @@ Use a single dash for INPUT to read CSS from standard input.
 Examples:
   $ ${binname} fragmented.css
   $ ${binname} fragmented.css > packed.css`);
+};
 
-  return;
-}
-
-function pack(s, o) {
+const pack = (s, o) => {
   mqpacker
     .pack(s, o)
     .then(result => {
@@ -61,16 +57,16 @@ function pack(s, o) {
       }
     })
     .catch(error => {
-      if (error.name === "CssSyntaxError") {
-        console.error(
-          `${error.file}:${error.line}:${error.column}: ${error.reason}`
-        );
-        process.exit(1);
+      if (error.name !== "CssSyntaxError") {
+        throw error;
       }
 
-      throw error;
+      process.exitCode = 1;
+      console.error(
+        `${error.file}:${error.line}:${error.column}: ${error.reason}`
+      );
     });
-}
+};
 
 if (argv._.length < 1) {
   argv.help = true;
@@ -87,7 +83,7 @@ switch (true) {
 
     break;
 
-  default:
+  default: {
     if (argv.sort) {
       options.sort = true;
     }
@@ -96,10 +92,16 @@ switch (true) {
       options.map = true;
     }
 
-    options.from = argv._[0];
+    [options.from, options.to] = argv._;
+    let input = options.from;
 
-    if (argv._[1]) {
-      options.to = argv._[1];
+    if (input === "-") {
+      delete options.from;
+      input = process.stdin.fd;
+    }
+
+    if (!options.to) {
+      delete options.to;
     }
 
     if (options.map && options.to) {
@@ -108,10 +110,8 @@ switch (true) {
       };
     }
 
-    if (options.from === "-") {
-      delete options.from;
-      argv._[0] = process.stdin.fd;
-    }
-
-    pack(fs.readFileSync(argv._[0], "utf8"), options);
+    pack(fs.readFileSync(input, "utf8"), options);
+  }
 }
+
+/* eslint no-console: "off" */

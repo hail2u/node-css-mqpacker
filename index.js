@@ -1,10 +1,8 @@
-"use strict";
-
 const list = require("postcss/lib/list");
 const pkg = require("./package.json");
 const postcss = require("postcss");
 
-function isSourceMapAnnotation(rule) {
+const isSourceMapAnnotation = rule => {
   if (!rule) {
     return false;
   }
@@ -18,30 +16,29 @@ function isSourceMapAnnotation(rule) {
   }
 
   return true;
-}
+};
 
-function parseQueryList(queryList) {
+const parseQueryList = queryList => {
   const queries = [];
 
   list.comma(queryList).forEach(query => {
     const expressions = {};
 
     list.space(query).forEach(expression => {
-      expression = expression.toLowerCase();
+      let newExpression = expression.toLowerCase();
 
-      if (expression === "and") {
+      if (newExpression === "and") {
         return;
       }
 
-      if (/^\w+$/.test(expression)) {
-        expressions[expression] = true;
+      if (/^\w+$/.test(newExpression)) {
+        expressions[newExpression] = true;
 
         return;
       }
 
-      expression = list.split(expression.replace(/^\(|\)$/g, ""), [":"]);
-      const feature = expression[0];
-      const value = expression[1];
+      newExpression = list.split(newExpression.replace(/^\(|\)$/g, ""), [":"]);
+      const [feature, value] = newExpression;
 
       if (!expressions[feature]) {
         expressions[feature] = [];
@@ -53,49 +50,50 @@ function parseQueryList(queryList) {
   });
 
   return queries;
-}
+};
 
-function inspectLength(length) {
+const inspectLength = length => {
   if (length === "0") {
     return 0;
   }
 
-  length = /(-?\d*\.?\d+)(ch|em|ex|px|rem)/.exec(length);
+  const matches = /(-?\d*\.?\d+)(ch|em|ex|px|rem)/.exec(length);
 
-  if (!length) {
+  if (!matches) {
     return Number.MAX_VALUE;
   }
 
-  let num = length[1];
-  const unit = length[2];
+  matches.shift();
+  const [num, unit] = matches;
+  let newNum = num;
 
   switch (unit) {
     case "ch":
-      num = parseFloat(num) * 8.8984375;
+      newNum = parseFloat(newNum) * 8.8984375;
 
       break;
 
     case "em":
     case "rem":
-      num = parseFloat(num) * 16;
+      newNum = parseFloat(newNum) * 16;
 
       break;
 
     case "ex":
-      num = parseFloat(num) * 8.296875;
+      newNum = parseFloat(newNum) * 8.296875;
 
       break;
 
     case "px":
-      num = parseFloat(num);
+      newNum = parseFloat(newNum);
 
       break;
   }
 
-  return num;
-}
+  return newNum;
+};
 
-function pickMinimumMinWidth(expressions) {
+const pickMinimumMinWidth = expressions => {
   const minWidths = [];
 
   expressions.forEach(feature => {
@@ -105,19 +103,13 @@ function pickMinimumMinWidth(expressions) {
       minWidth = [null];
     }
 
-    minWidths.push(
-      minWidth.map(inspectLength).sort((a, b) => {
-        return b - a;
-      })[0]
-    );
+    minWidths.push(minWidth.map(inspectLength).sort((a, b) => b - a)[0]);
   });
 
-  return minWidths.sort((a, b) => {
-    return a - b;
-  })[0];
-}
+  return minWidths.sort((a, b) => a - b)[0];
+};
 
-function sortQueryLists(queryLists, sort) {
+const sortQueryLists = (queryLists, sort) => {
   const mapQueryLists = [];
 
   if (!sort) {
@@ -133,33 +125,21 @@ function sortQueryLists(queryLists, sort) {
   });
 
   return mapQueryLists
-    .map((e, i) => {
-      return {
-        index: i,
-        value: pickMinimumMinWidth(e)
-      };
-    })
-    .sort((a, b) => {
-      return a.value - b.value;
-    })
-    .map(e => {
-      return queryLists[e.index];
-    });
-}
+    .map((e, i) => ({
+      index: i,
+      value: pickMinimumMinWidth(e)
+    }))
+    .sort((a, b) => a.value - b.value)
+    .map(e => queryLists[e.index]);
+};
 
-module.exports = postcss.plugin(pkg.name, opts => {
-  if (!opts) {
-    opts = {};
-  }
+module.exports = postcss.plugin(pkg.name, options => {
+  const opts = {
+    sort: false,
+    ...options
+  };
 
-  opts = Object.assign(
-    {
-      sort: false
-    },
-    opts
-  );
-
-  return function(css) {
+  return css => {
     const queries = {};
     const queryLists = [];
 
@@ -184,12 +164,8 @@ module.exports = postcss.plugin(pkg.name, opts => {
           newAtRule.append(rule);
         });
         atRule.remove();
-        atRule = postcss
-          .atRule({
-            name: atRule.name,
-            params: atRule.params
-          })
-          .append(newAtRule);
+        atRule.removeAll();
+        atRule.append(newAtRule);
       }
 
       const queryList = atRule.params;
@@ -214,8 +190,6 @@ module.exports = postcss.plugin(pkg.name, opts => {
     if (sourceMap) {
       css.append(sourceMap);
     }
-
-    return css;
   };
 });
 
