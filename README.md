@@ -96,7 +96,7 @@ process its content, and output processed CSS to STDOUT:
 const fs = require("fs");
 const mqpacker = require("css-mqpacker");
 
-cosole.log(mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
+console.log(mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
   from: "from.css",
   map: {
     inline: false
