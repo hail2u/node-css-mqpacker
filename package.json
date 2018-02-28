@@ -33,6 +33,7 @@
     "url": "https://github.com/hail2u/node-css-mqpacker.git"
   },
   "scripts": {
-    "test": "nodeunit test"
+    "test": "nodeunit test",
+    "cover": "npx istanbul cover --dir .istanbul node_modules/nodeunit/bin/nodeunit -- test"
   }
 }
