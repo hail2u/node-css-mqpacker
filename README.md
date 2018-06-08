@@ -85,7 +85,7 @@ It is a recommended way to use this tool.
 
 ### As standard Node.js package
 
-This package is also a Node.js module. For exmaple, you can read `from.css`,
+This package is also a Node.js module. For example, you can read `from.css`,
 process its content, and output processed CSS to STDOUT:
 
 ```javascript
@@ -251,7 +251,7 @@ This does not occur on small project. However, this could occur frequently on
 large project. For example, if you want to override a CSS framework (like
 Bootstrap) component declaration, your whole CSS code will be something similar
 to above example. To avoid this problem, you should pack only CSS you write, and
-then concaenate with a CSS framework.
+then concatenate with a CSS framework.
 
 
 ### The “First Win” Algorithm
