@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "minimist": "^1.2.0",
-    "postcss": "^6.0.16"
+    "postcss": "^7.0.0"
   },
   "devDependencies": {
     "nodeunit": "^0.11.1"
