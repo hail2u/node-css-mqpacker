@@ -3,6 +3,8 @@ const path = require("path");
 const postcss = require("postcss");
 const mqpacker = require("../index");
 
+const doNothing = postcss.plugin("do-nothing", () => () => {});
+
 exports["Public API"] = test => {
   const input = `.foo {
   z-index: 0;
@@ -14,7 +16,7 @@ exports["Public API"] = test => {
   }
 }
 `;
-  const expected = postcss().process(input).css;
+  const expected = postcss(doNothing).process(input).css;
   test.expect(2);
   test.strictEqual(postcss([mqpacker()]).process(input).css, expected);
   test.strictEqual(mqpacker.pack(input).css, expected);
@@ -40,7 +42,7 @@ exports["Option: PostCSS options"] = test => {
       inline: false
     }
   };
-  const expected = postcss().process(input, opts);
+  const expected = postcss(doNothing).process(input, opts);
   const processed = mqpacker.pack(input, opts);
   test.expect(2);
   test.strictEqual(processed.css, expected.css);
