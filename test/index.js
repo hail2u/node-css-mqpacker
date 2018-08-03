@@ -104,9 +104,9 @@ exports["Option: sort"] = test => {
 
 exports["Real CSS"] = test => {
   const testCases = fs.readdirSync(path.join(__dirname, "fixtures"));
-  const loadExpected = file =>
+  const readExpected = file =>
     fs.readFileSync(path.join(__dirname, "expected", file), "utf8");
-  const loadInput = file =>
+  const readInput = file =>
     fs.readFileSync(path.join(__dirname, "fixtures", file), "utf8");
   test.expect(testCases.length);
   testCases.forEach(testCase => {
@@ -119,8 +119,8 @@ exports["Real CSS"] = test => {
     }
 
     test.strictEqual(
-      mqpacker.pack(loadInput(testCase), opts).css,
-      loadExpected(testCase),
+      mqpacker.pack(readInput(testCase), opts).css,
+      readExpected(testCase),
       testCase
     );
   });
