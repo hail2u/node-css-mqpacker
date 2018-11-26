@@ -31,5 +31,8 @@
   },
   "scripts": {
     "test": "nodeunit test"
-  }
+  },
+  "files": [
+    "index.js"
+  ]
 }
