@@ -5,7 +5,7 @@ const mqpacker = require("../index");
 
 const doNothing = postcss.plugin("do-nothing", () => () => {});
 
-exports["Public API"] = test => {
+exports["Default"] = test => {
   const input = `.foo {
   z-index: 0;
 }
@@ -17,36 +17,8 @@ exports["Public API"] = test => {
 }
 `;
   const expected = postcss(doNothing).process(input).css;
-  test.expect(2);
+  test.expect(1);
   test.strictEqual(postcss([mqpacker()]).process(input).css, expected);
-  test.strictEqual(mqpacker.pack(input).css, expected);
-  test.done();
-};
-
-exports["Option: PostCSS options"] = test => {
-  const input = `.foo {
-  z-index: 0;
-}
-
-@media (min-width:1px) {
-  .foo {
-    z-index: 1;
-  }
-}
-
-/*# sourceMappingURL=from.css.map */
-`;
-  const opts = {
-    from: "from.css",
-    map: {
-      inline: false
-    }
-  };
-  const expected = postcss(doNothing).process(input, opts);
-  const processed = mqpacker.pack(input, opts);
-  test.expect(2);
-  test.strictEqual(processed.css, expected.css);
-  test.deepEqual(processed.map, expected.map);
   test.done();
 };
 
@@ -86,17 +58,15 @@ exports["Option: sort"] = test => {
   const opts = {
     sort: true
   };
-  test.expect(4);
-  test.notStrictEqual(mqpacker.pack(input).css, expected);
-  test.strictEqual(mqpacker.pack(input, opts).css, expected);
+  test.expect(2);
   test.notStrictEqual(
     postcss([mqpacker()]).process(input).css,
     postcss([mqpacker(opts)]).process(input).css
   );
   test.strictEqual(
-    mqpacker.pack(input, {
+    postcss([mqpacker({
       sort: (c, d) => c.localeCompare(d)
-    }).css,
+    })]).process(input).css,
     expected
   );
   test.done();
@@ -119,7 +89,7 @@ exports["Real CSS"] = test => {
     }
 
     test.strictEqual(
-      mqpacker.pack(readInput(testCase), opts).css,
+      postcss([mqpacker(opts)]).process(readInput(testCase)).css,
       readExpected(testCase),
       testCase
     );
