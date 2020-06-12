@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "eslint": "^7.2.0",
-    "nodeunit": "^0.11.3"
+    "qnit": "^0.28.0-d"
   },
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
   "license": "MIT",
@@ -21,6 +21,5 @@
     "url": "https://github.com/hail2u/node-css-mqpacker.git"
   },
   "scripts": {
-    "test": "eslint index.js test/index.js && nodeunit test"
-  }
+		"test": "eslint index.js test/index.js && qnit test"
 }
