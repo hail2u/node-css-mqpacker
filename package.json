@@ -10,6 +10,7 @@
     "postcss": "^7.0.0"
   },
   "devDependencies": {
+    "eslint": "^7.2.0",
     "nodeunit": "^0.11.3"
   },
   "homepage": "https://github.com/hail2u/node-css-mqpacker",
@@ -20,6 +21,6 @@
     "url": "https://github.com/hail2u/node-css-mqpacker.git"
   },
   "scripts": {
-    "test": "nodeunit test"
+    "test": "eslint index.js test/index.js && nodeunit test"
   }
 }

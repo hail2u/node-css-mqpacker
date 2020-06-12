@@ -3,9 +3,9 @@ const path = require("path");
 const postcss = require("postcss");
 const mqpacker = require("../index");
 
-const doNothing = postcss.plugin("do-nothing", () => () => {});
+const doNothing = postcss.plugin("do-nothing", () => () => "");
 
-exports["Default"] = test => {
+exports.Default = (test) => {
   const input = `.foo {
   z-index: 0;
 }
@@ -22,7 +22,7 @@ exports["Default"] = test => {
   test.done();
 };
 
-exports["Option: sort"] = test => {
+exports["Option: sort"] = (test) => {
   const expected = `.foo {
   z-index: 0;
 }
@@ -72,14 +72,14 @@ exports["Option: sort"] = test => {
   test.done();
 };
 
-exports["Real CSS"] = test => {
+exports["Real CSS"] = (test) => {
   const testCases = fs.readdirSync(path.join(__dirname, "fixtures"));
-  const readExpected = file =>
+  const readExpected = (file) =>
     fs.readFileSync(path.join(__dirname, "expected", file), "utf8");
-  const readInput = file =>
+  const readInput = (file) =>
     fs.readFileSync(path.join(__dirname, "fixtures", file), "utf8");
   test.expect(testCases.length);
-  testCases.forEach(testCase => {
+  testCases.forEach((testCase) => {
     const opts = {
       sort: false
     };

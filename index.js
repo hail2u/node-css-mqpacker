@@ -2,7 +2,7 @@ const list = require("postcss/lib/list");
 const pkg = require("./package.json");
 const postcss = require("postcss");
 
-const isSourceMapAnnotation = rule => {
+const isSourceMapAnnotation = (rule) => {
   if (!rule) {
     return false;
   }
@@ -18,13 +18,13 @@ const isSourceMapAnnotation = rule => {
   return true;
 };
 
-const parseQueryList = queryList => {
+const parseQueryList = (queryList) => {
   const queries = [];
 
-  list.comma(queryList).forEach(query => {
+  list.comma(queryList).forEach((query) => {
     const expressions = {};
 
-    list.space(query).forEach(expression => {
+    list.space(query).forEach((expression) => {
       let newExpression = expression.toLowerCase();
 
       if (newExpression === "and") {
@@ -52,7 +52,7 @@ const parseQueryList = queryList => {
   return queries;
 };
 
-const inspectLength = length => {
+const inspectLength = (length) => {
   if (length === "0") {
     return 0;
   }
@@ -93,10 +93,10 @@ const inspectLength = length => {
   return newNum;
 };
 
-const pickMinimumMinWidth = expressions => {
+const pickMinimumMinWidth = (expressions) => {
   const minWidths = [];
 
-  expressions.forEach(feature => {
+  expressions.forEach((feature) => {
     let minWidth = feature["min-width"];
 
     if (!minWidth || feature.not || feature.print) {
@@ -120,7 +120,7 @@ const sortQueryLists = (queryLists, sort) => {
     return queryLists.sort(sort);
   }
 
-  queryLists.forEach(queryList => {
+  queryLists.forEach((queryList) => {
     mapQueryLists.push(parseQueryList(queryList));
   });
 
@@ -130,16 +130,16 @@ const sortQueryLists = (queryLists, sort) => {
       value: pickMinimumMinWidth(e)
     }))
     .sort((a, b) => a.value - b.value)
-    .map(e => queryLists[e.index]);
+    .map((e) => queryLists[e.index]);
 };
 
-module.exports = postcss.plugin(pkg.name, options => {
+module.exports = postcss.plugin(pkg.name, (options) => {
   const opts = {
     sort: false,
     ...options
   };
 
-  return css => {
+  return (css) => {
     const queries = {};
     const queryLists = [];
 
@@ -149,7 +149,7 @@ module.exports = postcss.plugin(pkg.name, options => {
       sourceMap = null;
     }
 
-    css.walkAtRules("media", atRule => {
+    css.walkAtRules("media", (atRule) => {
       if (atRule.parent.parent && atRule.parent.parent.type !== "root") {
         return;
       }
@@ -160,7 +160,7 @@ module.exports = postcss.plugin(pkg.name, options => {
           params: atRule.parent.params
         });
 
-        atRule.each(rule => {
+        atRule.each((rule) => {
           newAtRule.append(rule);
         });
         atRule.remove();
@@ -172,7 +172,7 @@ module.exports = postcss.plugin(pkg.name, options => {
       const past = queries[queryList];
 
       if (typeof past === "object") {
-        atRule.each(rule => {
+        atRule.each((rule) => {
           past.append(rule.clone());
         });
       } else {
@@ -183,7 +183,7 @@ module.exports = postcss.plugin(pkg.name, options => {
       atRule.remove();
     });
 
-    sortQueryLists(queryLists, opts.sort).forEach(queryList => {
+    sortQueryLists(queryLists, opts.sort).forEach((queryList) => {
       css.append(queries[queryList]);
     });
 

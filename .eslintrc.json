@@ -1,0 +1,71 @@
+{
+	"env": {
+		"es6": true,
+		"node": true
+	},
+	"extends": "eslint:recommended",
+	"ignorePatterns": [
+		"**/*.min.js"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"globalReturn": true,
+			"impliedStrict": true,
+			"jsx": true
+		},
+		"ecmaVersion": 2019,
+		"sourceType": "module"
+	},
+	"root": true,
+	"rules": {
+		"array-callback-return": "error",
+		"arrow-body-style": "error",
+		"arrow-parens": "error",
+		"arrow-spacing": "error",
+		"callback-return": "error",
+		"consistent-return": "error",
+		"curly": "error",
+		"default-case-last": "error",
+		"default-param-last": "error",
+		"dot-notation": "error",
+		"eqeqeq": "error",
+		"global-require": "error",
+		"init-declarations": "error",
+		"no-duplicate-imports": "error",
+		"no-else-return": "error",
+		"no-empty-function": "error",
+		"no-extend-native": "error",
+		"no-extra-bind": "error",
+		"no-floating-decimal": "error",
+		"no-implicit-coercion": "error",
+		"no-multi-str": "error",
+		"no-param-reassign": "error",
+		"no-path-concat": "error",
+		"no-return-assign": "error",
+		"no-return-await": "error",
+		"no-shadow": "error",
+		"no-throw-literal": "error",
+		"no-undef": "error",
+		"no-undef-init": "error",
+		"no-undefined": "error",
+		"no-unmodified-loop-condition": "error",
+		"no-unused-expressions": "error",
+		"no-use-before-define": "error",
+		"no-useless-computed-key": "error",
+		"no-useless-concat": "error",
+		"no-useless-return": "error",
+		"no-var": "error",
+		"prefer-arrow-callback": "error",
+		"prefer-const": "error",
+		"prefer-destructuring": "error",
+		"prefer-promise-reject-errors": "error",
+		"prefer-regex-literals": "error",
+		"prefer-rest-params": "error",
+		"prefer-spread": "error",
+		"prefer-template": "error",
+		"radix": "error",
+		"require-await": "error",
+		"rest-spread-spacing": "error",
+		"sort-imports": "error"
+	}
+}
