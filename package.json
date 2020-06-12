@@ -7,7 +7,7 @@
     "url": "https://github.com/hail2u/node-css-mqpacker/issues"
   },
   "dependencies": {
-    "postcss": "^7.0.0"
+    "postcss": "^7.0.32"
   },
   "devDependencies": {
     "eslint": "^7.2.0",
