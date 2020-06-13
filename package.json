@@ -1,5 +1,5 @@
 {
-	"name": "css-mqpacker",
+	"name": "@hail2u/css-mqpacker",
 	"version": "7.0.0",
 	"description": "Pack same CSS media query rules into one using PostCSS",
 	"homepage": "https://github.com/hail2u/node-css-mqpacker",
