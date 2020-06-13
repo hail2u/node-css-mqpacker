@@ -1,20 +1,13 @@
 {
 	"name": "css-mqpacker",
-	"description": "Pack same CSS media query rules into one using PostCSS",
 	"version": "7.0.0",
-	"author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
+	"description": "Pack same CSS media query rules into one using PostCSS",
+	"homepage": "https://github.com/hail2u/node-css-mqpacker",
 	"bugs": {
 		"url": "https://github.com/hail2u/node-css-mqpacker/issues"
 	},
-	"dependencies": {
-		"postcss": "^7.0.32"
-	},
-	"devDependencies": {
-		"eslint": "^7.2.0",
-		"qnit": "^0.28.0-d"
-	},
-	"homepage": "https://github.com/hail2u/node-css-mqpacker",
 	"license": "MIT",
+	"author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
@@ -22,5 +15,12 @@
 	},
 	"scripts": {
 		"test": "eslint index.js test/index.js && qnit test"
+	},
+	"dependencies": {
+		"postcss": "^7.0.32"
+	},
+	"devDependencies": {
+		"eslint": "^7.2.0",
+		"qnit": "^0.28.0-d"
 	}
 }
