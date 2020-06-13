@@ -2,10 +2,10 @@ const fs = require("fs");
 const path = require("path");
 const postcss = require("postcss");
 const mqpacker = require("../index");
+const tape = require("tape");
 
-const doNothing = postcss.plugin("do-nothing", () => () => "");
-
-exports.Default = (test) => {
+tape("Loading test", (test) => {
+	const doNothing = postcss.plugin("do-nothing", () => () => "");
 	const input = `.foo {
 	z-index: 0;
 }
@@ -16,13 +16,13 @@ exports.Default = (test) => {
 	}
 }
 `;
-	const expected = postcss(doNothing).process(input).css;
-	test.expect(1);
-	test.strictEqual(postcss([mqpacker()]).process(input).css, expected);
-	test.done();
-};
+	const expected = postcss([doNothing]).process(input).css;
+	test.plan(1);
+	test.equal(postcss([mqpacker()]).process(input).css, expected);
+	test.end();
+});
 
-exports["Option: sort"] = (test) => {
+tape("`sort` option test", (test) => {
 	const expected = `.foo {
 	z-index: 0;
 }
@@ -58,41 +58,39 @@ exports["Option: sort"] = (test) => {
 	const opts = {
 		sort: true
 	};
-	test.expect(2);
-	test.notStrictEqual(
+	test.plan(2);
+	test.notEqual(
 		postcss([mqpacker()]).process(input).css,
 		postcss([mqpacker(opts)]).process(input).css
 	);
-	test.strictEqual(
+	test.equal(
 		postcss([mqpacker({
 			sort: (c, d) => c.localeCompare(d)
 		})]).process(input).css,
 		expected
 	);
-	test.done();
-};
+	test.end();
+});
 
-exports["Real CSS"] = (test) => {
-	const testCases = fs.readdirSync(path.join(__dirname, "fixtures"));
-	const readExpected = (file) =>
-		fs.readFileSync(path.join(__dirname, "expected", file), "utf8");
-	const readInput = (file) =>
-		fs.readFileSync(path.join(__dirname, "fixtures", file), "utf8");
-	test.expect(testCases.length);
+tape("Real CSS files", (test) => {
+	const readActual = (file) => fs.readFileSync(path.join(__dirname, "actual", file), "utf8");
+
+	const readExpected = (file) => fs.readFileSync(path.join(__dirname, "expected", file), "utf8");
+
+	const testCases = fs.readdirSync(path.join(__dirname, "actual"));
+	test.plan(testCases.length);
 	testCases.forEach((testCase) => {
-		const opts = {
-			sort: false
-		};
+		const opts = {};
 
-		if (testCase.indexOf("sort_") === 0) {
+		if (testCase.startsWith("sort_")) {
 			opts.sort = true;
 		}
 
-		test.strictEqual(
-			postcss([mqpacker(opts)]).process(readInput(testCase)).css,
+		test.equal(
+			postcss([mqpacker(opts)]).process(readActual(testCase)).css,
 			readExpected(testCase),
 			testCase
 		);
 	});
-	test.done();
-};
+	test.end();
+});

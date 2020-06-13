@@ -14,13 +14,13 @@
 		"url": "https://github.com/hail2u/node-css-mqpacker.git"
 	},
 	"scripts": {
-		"test": "eslint index.js test/index.js && qnit test"
+		"test": "eslint index.js test/index.js && tape \"test/**/*.js\""
 	},
 	"dependencies": {
 		"postcss": "^7.0.32"
 	},
 	"devDependencies": {
 		"eslint": "^7.2.0",
-		"qnit": "^0.28.0-d"
+		"tape": "^5.0.1"
 	}
 }
