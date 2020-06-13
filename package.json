@@ -8,6 +8,9 @@
 	},
 	"license": "MIT",
 	"author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
+	"files": [
+		"index.js"
+	],
 	"main": "index.js",
 	"repository": {
 		"type": "git",
