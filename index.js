@@ -3,192 +3,192 @@ const pkg = require("./package.json");
 const postcss = require("postcss");
 
 const isSourceMapAnnotation = (rule) => {
-  if (!rule) {
-    return false;
-  }
+	if (!rule) {
+		return false;
+	}
 
-  if (rule.type !== "comment") {
-    return false;
-  }
+	if (rule.type !== "comment") {
+		return false;
+	}
 
-  if (rule.text.toLowerCase().indexOf("# sourcemappingurl=") !== 0) {
-    return false;
-  }
+	if (rule.text.toLowerCase().indexOf("# sourcemappingurl=") !== 0) {
+		return false;
+	}
 
-  return true;
+	return true;
 };
 
 const parseQueryList = (queryList) => {
-  const queries = [];
+	const queries = [];
 
-  list.comma(queryList).forEach((query) => {
-    const expressions = {};
+	list.comma(queryList).forEach((query) => {
+		const expressions = {};
 
-    list.space(query).forEach((expression) => {
-      let newExpression = expression.toLowerCase();
+		list.space(query).forEach((expression) => {
+			let newExpression = expression.toLowerCase();
 
-      if (newExpression === "and") {
-        return;
-      }
+			if (newExpression === "and") {
+				return;
+			}
 
-      if (/^\w+$/.test(newExpression)) {
-        expressions[newExpression] = true;
+			if (/^\w+$/.test(newExpression)) {
+				expressions[newExpression] = true;
 
-        return;
-      }
+				return;
+			}
 
-      newExpression = list.split(newExpression.replace(/^\(|\)$/g, ""), [":"]);
-      const [feature, value] = newExpression;
+			newExpression = list.split(newExpression.replace(/^\(|\)$/g, ""), [":"]);
+			const [feature, value] = newExpression;
 
-      if (!expressions[feature]) {
-        expressions[feature] = [];
-      }
+			if (!expressions[feature]) {
+				expressions[feature] = [];
+			}
 
-      expressions[feature].push(value);
-    });
-    queries.push(expressions);
-  });
+			expressions[feature].push(value);
+		});
+		queries.push(expressions);
+	});
 
-  return queries;
+	return queries;
 };
 
 const inspectLength = (length) => {
-  if (length === "0") {
-    return 0;
-  }
+	if (length === "0") {
+		return 0;
+	}
 
-  const matches = /(-?\d*\.?\d+)(ch|em|ex|px|rem)/.exec(length);
+	const matches = /(-?\d*\.?\d+)(ch|em|ex|px|rem)/.exec(length);
 
-  if (!matches) {
-    return Number.MAX_VALUE;
-  }
+	if (!matches) {
+		return Number.MAX_VALUE;
+	}
 
-  matches.shift();
-  const [num, unit] = matches;
-  let newNum = num;
+	matches.shift();
+	const [num, unit] = matches;
+	let newNum = num;
 
-  switch (unit) {
-    case "ch":
-      newNum = parseFloat(newNum) * 8.8984375;
+	switch (unit) {
+		case "ch":
+			newNum = parseFloat(newNum) * 8.8984375;
 
-      break;
+			break;
 
-    case "em":
-    case "rem":
-      newNum = parseFloat(newNum) * 16;
+		case "em":
+		case "rem":
+			newNum = parseFloat(newNum) * 16;
 
-      break;
+			break;
 
-    case "ex":
-      newNum = parseFloat(newNum) * 8.296875;
+		case "ex":
+			newNum = parseFloat(newNum) * 8.296875;
 
-      break;
+			break;
 
-    case "px":
-      newNum = parseFloat(newNum);
+		case "px":
+			newNum = parseFloat(newNum);
 
-      break;
-  }
+			break;
+	}
 
-  return newNum;
+	return newNum;
 };
 
 const pickMinimumMinWidth = (expressions) => {
-  const minWidths = [];
+	const minWidths = [];
 
-  expressions.forEach((feature) => {
-    let minWidth = feature["min-width"];
+	expressions.forEach((feature) => {
+		let minWidth = feature["min-width"];
 
-    if (!minWidth || feature.not || feature.print) {
-      minWidth = [null];
-    }
+		if (!minWidth || feature.not || feature.print) {
+			minWidth = [null];
+		}
 
-    minWidths.push(minWidth.map(inspectLength).sort((a, b) => b - a)[0]);
-  });
+		minWidths.push(minWidth.map(inspectLength).sort((a, b) => b - a)[0]);
+	});
 
-  return minWidths.sort((a, b) => a - b)[0];
+	return minWidths.sort((a, b) => a - b)[0];
 };
 
 const sortQueryLists = (queryLists, sort) => {
-  const mapQueryLists = [];
+	const mapQueryLists = [];
 
-  if (!sort) {
-    return queryLists;
-  }
+	if (!sort) {
+		return queryLists;
+	}
 
-  if (typeof sort === "function") {
-    return queryLists.sort(sort);
-  }
+	if (typeof sort === "function") {
+		return queryLists.sort(sort);
+	}
 
-  queryLists.forEach((queryList) => {
-    mapQueryLists.push(parseQueryList(queryList));
-  });
+	queryLists.forEach((queryList) => {
+		mapQueryLists.push(parseQueryList(queryList));
+	});
 
-  return mapQueryLists
-    .map((e, i) => ({
-      index: i,
-      value: pickMinimumMinWidth(e)
-    }))
-    .sort((a, b) => a.value - b.value)
-    .map((e) => queryLists[e.index]);
+	return mapQueryLists
+		.map((e, i) => ({
+			index: i,
+			value: pickMinimumMinWidth(e)
+		}))
+		.sort((a, b) => a.value - b.value)
+		.map((e) => queryLists[e.index]);
 };
 
 module.exports = postcss.plugin(pkg.name, (options) => {
-  const opts = {
-    sort: false,
-    ...options
-  };
+	const opts = {
+		sort: false,
+		...options
+	};
 
-  return (css) => {
-    const queries = {};
-    const queryLists = [];
+	return (css) => {
+		const queries = {};
+		const queryLists = [];
 
-    let sourceMap = css.last;
+		let sourceMap = css.last;
 
-    if (!isSourceMapAnnotation(sourceMap)) {
-      sourceMap = null;
-    }
+		if (!isSourceMapAnnotation(sourceMap)) {
+			sourceMap = null;
+		}
 
-    css.walkAtRules("media", (atRule) => {
-      if (atRule.parent.parent && atRule.parent.parent.type !== "root") {
-        return;
-      }
+		css.walkAtRules("media", (atRule) => {
+			if (atRule.parent.parent && atRule.parent.parent.type !== "root") {
+				return;
+			}
 
-      if (atRule.parent.type !== "root") {
-        const newAtRule = postcss.atRule({
-          name: atRule.parent.name,
-          params: atRule.parent.params
-        });
+			if (atRule.parent.type !== "root") {
+				const newAtRule = postcss.atRule({
+					name: atRule.parent.name,
+					params: atRule.parent.params
+				});
 
-        atRule.each((rule) => {
-          newAtRule.append(rule);
-        });
-        atRule.remove();
-        atRule.removeAll();
-        atRule.append(newAtRule);
-      }
+				atRule.each((rule) => {
+					newAtRule.append(rule);
+				});
+				atRule.remove();
+				atRule.removeAll();
+				atRule.append(newAtRule);
+			}
 
-      const queryList = atRule.params;
-      const past = queries[queryList];
+			const queryList = atRule.params;
+			const past = queries[queryList];
 
-      if (typeof past === "object") {
-        atRule.each((rule) => {
-          past.append(rule.clone());
-        });
-      } else {
-        queries[queryList] = atRule.clone();
-        queryLists.push(queryList);
-      }
+			if (typeof past === "object") {
+				atRule.each((rule) => {
+					past.append(rule.clone());
+				});
+			} else {
+				queries[queryList] = atRule.clone();
+				queryLists.push(queryList);
+			}
 
-      atRule.remove();
-    });
+			atRule.remove();
+		});
 
-    sortQueryLists(queryLists, opts.sort).forEach((queryList) => {
-      css.append(queries[queryList]);
-    });
+		sortQueryLists(queryLists, opts.sort).forEach((queryList) => {
+			css.append(queries[queryList]);
+		});
 
-    if (sourceMap) {
-      css.append(sourceMap);
-    }
-  };
+		if (sourceMap) {
+			css.append(sourceMap);
+		}
+	};
 });

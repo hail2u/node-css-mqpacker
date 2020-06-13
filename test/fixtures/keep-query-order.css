@@ -1,21 +1,21 @@
 .foo {
-  z-index: 0;
+	z-index: 0;
 }
 
 @media (min-width: 99px) {
-  .foo {
-    z-index: 1;
-  }
+	.foo {
+		z-index: 1;
+	}
 }
 
 @media (min-width: 999px) {
-  .foo {
-    z-index: 3;
-  }
+	.foo {
+		z-index: 3;
+	}
 }
 
 @media (min-width: 99px) {
-  .bar {
-    z-index: 2;
-  }
+	.bar {
+		z-index: 2;
+	}
 }

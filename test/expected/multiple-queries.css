@@ -1,30 +1,30 @@
 .foo {
-  z-index: 0;
+	z-index: 0;
 }
 
 @media (min-width: 99px) {
-  .foo {
-    z-index: 1;
-  }
-  .bar {
-    z-index: 2;
-  }
+	.foo {
+		z-index: 1;
+	}
+	.bar {
+		z-index: 2;
+	}
 }
 
 @media (min-width: 999px) {
-  .baz {
-    z-index: 3;
-  }
-  .qux {
-    z-index: 4;
-  }
+	.baz {
+		z-index: 3;
+	}
+	.qux {
+		z-index: 4;
+	}
 }
 
 @media screen and (min-width: 999px) {
-  .quux {
-    z-index: 5;
-  }
-  .corge {
-    z-index: 6;
-  }
+	.quux {
+		z-index: 5;
+	}
+	.corge {
+		z-index: 6;
+	}
 }

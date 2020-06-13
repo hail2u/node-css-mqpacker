@@ -1,27 +1,27 @@
 .foo {
-  z-index: 1;
+	z-index: 1;
 }
 
 @media (min-width: 1024px) {
-  .foo {
-    z-index: 3;
-  }
+	.foo {
+		z-index: 3;
+	}
 }
 
 @supports (display: auto) {
-  .foo {
-    z-index: 2;
-  }
+	.foo {
+		z-index: 2;
+	}
 
-  @media (min-width: 1024px) {
-    .foo {
-      z-index: 4;
-    }
-  }
+	@media (min-width: 1024px) {
+		.foo {
+			z-index: 4;
+		}
+	}
 }
 
 @media (min-width: 1024px) {
-  .bar {
-    z-index: 5;
-  }
+	.bar {
+		z-index: 5;
+	}
 }
