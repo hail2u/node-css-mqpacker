@@ -52,6 +52,12 @@ This PostCSS plugin packs exactly same media queries:
 }
 ```
 
+INSTALL
+-------
+
+	$ echo @hail2u:registry=https://npm.pkg.github.com >> .npmrc
+	$ npm install --save-dev @hail2u/css-mqpacker
+
 
 USAGE
 -----
