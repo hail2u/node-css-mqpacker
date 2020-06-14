@@ -11,23 +11,23 @@ A well componentized CSS file may have same media queries that can merge:
 
 ```css
 .foo {
-  width: 240px;
+	width: 240px;
 }
 
 @media screen and (min-width: 768px) {
-  .foo {
-    width: 576px;
-  }
+	.foo {
+		width: 576px;
+	}
 }
 
 .bar {
-  width: 160px;
+	width: 160px;
 }
 
 @media screen and (min-width: 768px) {
-  .bar {
-    width: 384px;
-  }
+	.bar {
+		width: 384px;
+	}
 }
 ```
 
@@ -35,20 +35,20 @@ This PostCSS plugin packs exactly same media queries:
 
 ```css
 .foo {
-  width: 240px;
+	width: 240px;
 }
 
 .bar {
-  width: 160px;
+	width: 160px;
 }
 
 @media screen and (min-width: 768px) {
-  .foo {
-    width: 576px;
-  }
-  .bar {
-    width: 384px;
-  }
+	.foo {
+		width: 576px;
+	}
+	.bar {
+		width: 384px;
+	}
 }
 ```
 
@@ -73,10 +73,10 @@ const fs = require("fs");
 const postcss = require("postcss");
 
 postcss([
-  require("autoprefixer-core")(),
-  require("css-mqpacker")()
+	require("autoprefixer-core")(),
+	require("css-mqpacker")()
 ]).process(fs.readFileSync("from.css", "utf8")).then(function (result) {
-  console.log(result.css);
+	console.log(result.css);
 });
 ```
 
@@ -92,9 +92,9 @@ pass `sort: true` to this module.
 
 ```javascript
 postcss([
-  mqpacker({
-    sort: true
-  })
+	mqpacker({
+		sort: true
+	})
 ]).process(css);
 ```
 
@@ -104,11 +104,11 @@ your own sorting function and pass it to this module like this:
 
 ```javascript
 postcss([
-  mqpacker({
-    sort: function (a, b) {
-      return a.localeCompare(b);
-    }
-  })
+	mqpacker({
+	sort: function (a, b) {
+		return a.localeCompare(b);
+	}
+	})
 ]).process(css);
 ```
 
@@ -133,13 +133,13 @@ unexpected cascading order. For example:
 
 ```css
 @media (min-width: 640px) {
-  .foo {
-    width: 300px;
-  }
+	.foo {
+		width: 300px;
+	}
 }
 
 .foo {
-  width: 400px;
+	width: 400px;
 }
 ```
 
@@ -147,13 +147,13 @@ Becomes:
 
 ```css
 .foo {
-  width: 400px;
+	width: 400px;
 }
 
 @media (min-width: 640px) {
-  .foo {
-    width: 300px;
-  }
+	.foo {
+		width: 300px;
+	}
 }
 ```
 
@@ -173,29 +173,29 @@ CSS MQPacker is implemented with the “first win” algorithm. This means:
 
 ```css
 .foo {
-  width: 10px;
+	width: 10px;
 }
 
 @media (min-width: 640px) {
-  .foo {
-    width: 150px;
-  }
+	.foo {
+		width: 150px;
+	}
 }
 
 .bar {
-  width: 20px;
+	width: 20px;
 }
 
 @media (min-width: 320px) {
-  .bar {
-    width: 200px;
-  }
+	.bar {
+		width: 200px;
+	}
 }
 
 @media (min-width: 640px) {
-  .bar {
-    width: 300px;
-  }
+	.bar {
+		width: 300px;
+	}
 }
 ```
 
@@ -203,26 +203,26 @@ Becomes:
 
 ```css
 .foo {
-  width: 10px;
+	width: 10px;
 }
 
 .bar {
-  width: 20px;
+	width: 20px;
 }
 
 @media (min-width: 640px) {
-  .foo {
-    width: 150px;
-  }
-  .bar {
-    width: 300px;
-  }
+	.foo {
+		width: 150px;
+	}
+	.bar {
+		width: 300px;
+	}
 }
 
 @media (min-width: 320px) {
-  .bar {
-    width: 200px;
-  }
+	.bar {
+		width: 200px;
+	}
 }
 ```
 
@@ -246,21 +246,21 @@ elements that have multiple classes. For example:
 
 ```css
 @media (min-width: 320px) {
-  .foo {
-    width: 100px;
-  }
+	.foo {
+		width: 100px;
+	}
 }
 
 @media (min-width: 640px) {
-  .bar {
-    width: 200px;
-  }
+	.bar {
+		width: 200px;
+	}
 }
 
 @media (min-width: 320px) {
-  .baz {
-    width: 300px;
-  }
+	.baz {
+		width: 300px;
+	}
 }
 ```
 
@@ -268,18 +268,18 @@ Becomes:
 
 ```css
 @media (min-width: 320px) {
-  .foo {
-    width: 100px;
-  }
-  .baz {
-    width: 300px;
-  }
+	.foo {
+		width: 100px;
+	}
+	.baz {
+		width: 300px;
+	}
 }
 
 @media (min-width: 640px) {
-  .bar {
-    width: 200px;
-  }
+	.bar {
+		width: 200px;
+	}
 }
 ```
 
