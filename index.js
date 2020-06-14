@@ -192,3 +192,7 @@ module.exports = postcss.plugin(pkg.name, (options) => {
 		}
 	};
 });
+
+module.exports.pack = function(css, opts) {
+  return postcss([this(opts)]).process(css, opts);
+};

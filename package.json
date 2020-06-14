@@ -12,6 +12,9 @@
 		"index.js"
 	],
 	"main": "index.js",
+	"bin": {
+		"mqpacker": "./bin/mqpacker.js"
+	},
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/hail2u/node-css-mqpacker.git"
@@ -20,6 +23,7 @@
 		"test": "eslint index.js test/index.js && tape \"test/**/*.js\""
 	},
 	"dependencies": {
+		"minimist": "^1.2.5",
 		"postcss": "^7.0.32"
 	},
 	"devDependencies": {

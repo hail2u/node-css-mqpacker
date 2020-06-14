@@ -1,7 +1,7 @@
 CSS MQPacker
 ============
 
-PostCSS plugin which packs same CSS media query rules into one
+Pack same CSS media query rules into one using PostCSS
 
 
 SYNOPSIS
@@ -31,7 +31,7 @@ A well componentized CSS file may have same media queries that can merge:
 }
 ```
 
-This PostCSS plugin packs exactly same media queries:
+This tool packs exactly same media queries:
 
 ```css
 .foo {
@@ -55,14 +55,14 @@ This PostCSS plugin packs exactly same media queries:
 INSTALL
 -------
 
-	$ echo @hail2u:registry=https://npm.pkg.github.com >> .npmrc
-	$ npm install --save-dev @hail2u/css-mqpacker
+    $ echo @hail2u:registry=https://npm.pkg.github.com >> .npmrc
+    $ npm install --save-dev @hail2u/css-mqpacker
 
 
 USAGE
 -----
 
-This package can be used as PostCSS plugin:
+Of course, this package can be used as PostCSS plugin:
 
 ```javascript
 #!/usr/bin/env node
@@ -79,6 +79,60 @@ postcss([
 	console.log(result.css);
 });
 ```
+
+It is a recommended way to use this tool.
+
+
+### As standard Node.js package
+
+This package is also a Node.js module. For example, you can read `from.css`,
+process its content, and output processed CSS to STDOUT:
+
+```javascript
+#!/usr/bin/env node
+
+"use strict";
+
+const fs = require("fs");
+const mqpacker = require("css-mqpacker");
+
+console.log(mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
+	from: "from.css",
+	map: {
+		inline: false
+	},
+	to: "to.css"
+}).css);
+```
+
+
+### As CLI Program
+
+This package also installs a command line interface.
+
+
+    $ node ./node_modules/.bin/mqpacker --help
+    Usage: mqpacker [options] INPUT [OUTPUT]
+    
+    Description:
+      Pack same CSS media query rules into one using PostCSS
+    
+    Options:
+      -s, --sort       Sort “min-width” queries.
+          --sourcemap  Create source map file.
+      -h, --help       Show this message.
+          --version    Print version information.
+    
+    Use a single dash for INPUT to read CSS from standard input.
+    
+    Examples:
+      $ mqpacker fragmented.css
+      $ mqpacker fragmented.css > packed.css
+
+When PostCSS failed to parse INPUT, CLI shows a CSS parse error in GNU error
+format instead of Node.js stack trace.
+
+The `--sort` option does not currently support a custom function.
 
 
 OPTIONS
@@ -116,6 +170,37 @@ In this example, all your media queries will sort by A-Z order.
 
 This sorting function is directly passed to `Array#sort()` method of an array of
 all your media queries.
+
+
+API
+---
+
+### pack(css, [options])
+
+Packs media queries in `css`.
+
+The second argument is optional. The `options` are:
+
+- [options][2] mentioned above
+- the second argument of [PostCSS’s `process()` method][3]
+
+You can specify both at the same time.
+
+```javascript
+const fs = require("fs");
+const mqpacker = require("css-mqpacker");
+
+const result = mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
+	from: "from.css",
+	map: {
+		inline: false
+	},
+	sort: true,
+	to: "to.css"
+});
+fs.writeFileSync("to.css", result.css);
+fs.writeFileSync("to.css.map", result.map);
+```
 
 
 NOTES
@@ -236,7 +321,7 @@ I suggest defining a query order on top of your CSS:
 @media (min-width: 640px) { /* Wider than 640px */ }
 ```
 
-If you use simple `min-width` queries only, [the `sort` option][2] can help.
+If you use simple `min-width` queries only, [the `sort` option][4] can help.
 
 
 ### Multiple Classes
@@ -292,8 +377,10 @@ careful!
 LICENSE
 -------
 
-MIT
+MIT: http://hail2u.mit-license.org/2014
 
 
 [1]: #the-first-win-algorithm
-[2]: #sort
+[2]: #options
+[3]: http://api.postcss.org/global.html#processOptions
+[4]: #sort

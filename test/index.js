@@ -17,8 +17,9 @@ tape("Loading test", (test) => {
 }
 `;
 	const expected = postcss([doNothing]).process(input).css;
-	test.plan(1);
+	test.plan(2);
 	test.equal(postcss([mqpacker()]).process(input).css, expected);
+	test.equal(mqpacker.pack(input).css, expected);
 	test.end();
 });
 
@@ -58,7 +59,9 @@ tape("`sort` option test", (test) => {
 	const opts = {
 		sort: true
 	};
-	test.plan(2);
+	test.plan(4);
+	test.notEqual(mqpacker.pack(input).css, expected);
+	test.equal(mqpacker.pack(input, opts).css, expected);
 	test.notEqual(
 		postcss([mqpacker()]).process(input).css,
 		postcss([mqpacker(opts)]).process(input).css
