@@ -15,7 +15,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/hail2u/node-css-mqpacker.git"
+		"url": "git://github.com/hail2u/node-css-mqpacker.git"
 	},
 	"scripts": {
 		"test": "eslint index.js test/index.js && tape \"test/**/*.js\""
@@ -27,5 +27,8 @@
 	"devDependencies": {
 		"eslint": "^7.2.0",
 		"tape": "^5.0.1"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
 	}
 }
