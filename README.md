@@ -65,16 +65,11 @@ USAGE
 Of course, this package can be used as PostCSS plugin:
 
 ```javascript
-#!/usr/bin/env node
-
-"use strict";
-
 const fs = require("fs");
 const postcss = require("postcss");
 
 postcss([
-	require("autoprefixer-core")(),
-	require("css-mqpacker")()
+	require("@hail2u/css-mqpacker")()
 ]).process(fs.readFileSync("from.css", "utf8")).then(function (result) {
 	console.log(result.css);
 });
@@ -89,12 +84,8 @@ This package is also a Node.js module. For example, you can read `from.css`,
 process its content, and output processed CSS to STDOUT:
 
 ```javascript
-#!/usr/bin/env node
-
-"use strict";
-
 const fs = require("fs");
-const mqpacker = require("css-mqpacker");
+const mqpacker = require("@hail2u/css-mqpacker");
 
 console.log(mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
 	from: "from.css",
@@ -159,9 +150,9 @@ your own sorting function and pass it to this module like this:
 ```javascript
 postcss([
 	mqpacker({
-	sort: function (a, b) {
-		return a.localeCompare(b);
-	}
+		sort: function (a, b) {
+			return a.localeCompare(b);
+		}
 	})
 ]).process(css);
 ```
@@ -188,7 +179,7 @@ You can specify both at the same time.
 
 ```javascript
 const fs = require("fs");
-const mqpacker = require("css-mqpacker");
+const mqpacker = require("@hail2u/css-mqpacker");
 
 const result = mqpacker.pack(fs.readFileSync("from.css", "utf8"), {
 	from: "from.css",
