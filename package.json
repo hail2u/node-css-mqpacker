@@ -7,7 +7,7 @@
 		"url": "https://github.com/hail2u/node-css-mqpacker/issues"
 	},
 	"license": "MIT",
-	"author": "Kyo Nagashima <hail2u@gmail.com> (https://kyonagashima.com/)",
+	"author": "Kyo Nagashima <hail2u@gmail.com> (https://hail2u.net/)",
 	"files": [],
 	"main": "index.js",
 	"bin": {

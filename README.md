@@ -368,7 +368,7 @@ careful!
 LICENSE
 -------
 
-MIT: http://hail2u.mit-license.org/2014
+MIT
 
 
 [1]: #the-first-win-algorithm
