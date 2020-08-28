@@ -58,6 +58,13 @@ INSTALL
     $ echo @hail2u:registry=https://npm.pkg.github.com >> .npmrc
     $ npm install --save-dev @hail2u/css-mqpacker
 
+If you or your team member does not have GitHub account, you can install
+directly from the GitHub repository:
+
+    $ npm install --save-dev github:hail2u/node-css-mqpacker#<TAG>
+
+`<TAG>` should be replaced with one of the [available tags].
+
 
 USAGE
 -----
@@ -371,6 +378,7 @@ LICENSE
 MIT
 
 
+[available tags]: https://github.com/hail2u/node-css-mqpacker/tags
 [1]: #the-first-win-algorithm
 [2]: #options
 [3]: http://api.postcss.org/global.html#processOptions
