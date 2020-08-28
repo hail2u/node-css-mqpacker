@@ -63,7 +63,7 @@ directly from the GitHub repository:
 
     $ npm install --save-dev github:hail2u/node-css-mqpacker#<TAG>
 
-`<TAG>` should be replaced with one of the [available tags].
+`<TAG>` should be replaced with one of the [available tags][1].
 
 
 USAGE
@@ -139,7 +139,7 @@ OPTIONS
 ### sort
 
 By default, CSS MQPacker pack and order media queries as they are defined ([the
-“first win” algorithm][1]). If you want to sort media queries automatically,
+“first win” algorithm][2]). If you want to sort media queries automatically,
 pass `sort: true` to this module.
 
 ```javascript
@@ -173,14 +173,14 @@ all your media queries.
 API
 ---
 
-### pack(css, [options])
+### pack(css[, options])
 
 Packs media queries in `css`.
 
 The second argument is optional. The `options` are:
 
-- [options][2] mentioned above
-- the second argument of [PostCSS’s `process()` method][3]
+- [options][3] mentioned above
+- the second argument of [PostCSS’s `process()` method][4]
 
 You can specify both at the same time.
 
@@ -319,7 +319,7 @@ I suggest defining a query order on top of your CSS:
 @media (min-width: 640px) { /* Wider than 640px */ }
 ```
 
-If you use simple `min-width` queries only, [the `sort` option][4] can help.
+If you use simple `min-width` queries only, [the `sort` option][5] can help.
 
 
 ### Multiple Classes
@@ -378,8 +378,8 @@ LICENSE
 MIT
 
 
-[available tags]: https://github.com/hail2u/node-css-mqpacker/tags
-[1]: #the-first-win-algorithm
-[2]: #options
-[3]: http://api.postcss.org/global.html#processOptions
-[4]: #sort
+[1]: https://github.com/hail2u/node-css-mqpacker/tags
+[2]: #the-first-win-algorithm
+[3]: #options
+[4]: http://api.postcss.org/global.html#processOptions
+[5]: #sort
