@@ -21,12 +21,14 @@
 		"test": "eslint index.js test/index.js && tape \"test/**/*.js\""
 	},
 	"dependencies": {
-		"minimist": "^1.2.5",
-		"postcss": "^7.0.32"
+		"minimist": "^1.2.5"
 	},
 	"devDependencies": {
 		"eslint": "^7.2.0",
 		"tape": "^5.0.1"
+	},
+	"peerDependencies": {
+		"postcss": "^8.3.5"
 	},
 	"publishConfig": {
 		"registry": "https://npm.pkg.github.com/"
