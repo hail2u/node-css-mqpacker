@@ -5,7 +5,12 @@ const mqpacker = require("../index");
 const tape = require("tape");
 
 tape("Loading test", (test) => {
-	const doNothing = postcss.plugin("do-nothing", () => () => "");
+	const doNothing = () => ({
+		postcssPlugin: "do-nothing",
+		Once() {
+			return "";
+		}
+	});
 	const input = `.foo {
 	z-index: 0;
 }
