@@ -18,7 +18,7 @@
 		"url": "git://github.com/hail2u/node-css-mqpacker.git"
 	},
 	"scripts": {
-		"test": "eslint index.js test/index.js && tape \"test/**/*.js\""
+		"test": "eslint index.js bin/mqpacker.js test/index.js && node test/index.js"
 	},
 	"dependencies": {
 		"minimist": "^1.2.5"

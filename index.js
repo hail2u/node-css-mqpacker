@@ -197,4 +197,5 @@ module.exports = (options) => {
 module.exports.pack = function(css, opts) {
   return postcss([this(opts)]).process(css, opts);
 };
+
 module.exports.postcss = true;
