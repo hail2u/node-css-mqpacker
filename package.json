@@ -8,8 +8,13 @@
 	},
 	"license": "MIT",
 	"author": "Kyo Nagashima <hail2u@gmail.com> (https://hail2u.net/)",
-	"files": [],
+	"files": [
+		"bin",
+		"index.js",
+		"index.d.ts"
+	],
 	"main": "index.js",
+	"types": "index.d.ts",
 	"bin": {
 		"mqpacker": "./bin/mqpacker.js"
 	},
